@@ -2,10 +2,6 @@ package greet
 
 import "testing"
 
-func Greet() string {
-  return "Hello World!"
-}
-
 func TestGreet(t *testing.T) {
   expected := "Hello World!"
   actual := Greet()
