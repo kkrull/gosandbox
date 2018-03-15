@@ -1,21 +1,26 @@
-package greet
+package greet_test
 
-import "testing"
+import (
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 
-func TestGreetWithNoNameShouldGreetTheWorld(t *testing.T) {
-  assertEqual(t, "Hello World!", Greet())
-}
+	. "github.com/8thlight/greet"
+)
 
-func TestGreetWithOneNameShouldGreetThatPersonByName(t *testing.T) {
-  assertEqual(t, "Hello George!", Greet("George"))
-}
+var _ = Describe("Greet", func() {
+  It("Greets the world when no names are given", func() {
+    Expect(Greet()).To(Equal("Hello World!"))
+  })
 
-func TestGreetWithTwoOrMoreNamesListsThosePeople(t *testing.T) {
-  assertEqual(t, "Hello George, Judy, and Astro!", Greet("George", "Judy", "Astro"))
-}
+  It("Greets a single person by their name", func() {
+    Expect(Greet("George")).To(Equal("Hello George!"))
+  })
 
-func assertEqual(t *testing.T, expected string, actual string) {
-  if actual != expected {
-    t.Errorf("Expected <%v>, but was <%v>", expected, actual)
-  }
-}
+  It("Greets two people by name, joining words with 'and'", func() {
+    Expect(Greet("George", "Judy")).To(Equal("Hello George and Judy!"))
+  })
+
+  It("Greets 3 or more people by a comma-separated list of their names", func() {
+    Expect(Greet("George", "Judy", "Astro")).To(Equal("Hello George, Judy, and Astro!"))
+  })
+})

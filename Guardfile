@@ -18,8 +18,8 @@
 guard :shell do
   watch /(.*).go/ do |m|
     timestamp = Time.now.strftime('%H:%M:%S')
-    "#{timestamp} #{m[0]} changed"
-    `go test`
+    puts "#{timestamp} #{m[0]} changed"
+    `ginkgo`
   end
 end
 
