@@ -18,7 +18,7 @@ func TestGreetWithOneNameShouldGreetThatPersonByName(t *testing.T) {
   }
 }
 
-func TestGreetWithTwoOrMoreNamesGreetsAListingOfThosePeople(t *testing.T) {
+func TestGreetWithTwoOrMoreNamesListsThosePeople(t *testing.T) {
   expected := "Hello George, Judy, and Astro!"
   actual := Greet("George", "Judy", "Astro")
   if actual != expected {
