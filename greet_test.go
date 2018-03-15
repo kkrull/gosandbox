@@ -3,26 +3,19 @@ package greet
 import "testing"
 
 func TestGreetWithNoNameShouldGreetTheWorld(t *testing.T) {
-  expected := "Hello World!"
-  actual := Greet()
-  if actual != expected {
-    t.Errorf("Expected <%v> but was <%v>", expected, actual)
-  }
+  assertEqual(t, "Hello World!", Greet())
 }
 
 func TestGreetWithOneNameShouldGreetThatPersonByName(t *testing.T) {
-  expected := "Hello George!"
-  actual := Greet("George")
-  if actual != expected {
-    t.Errorf("Expected <%v> but was <%v>", expected, actual)
-  }
+  assertEqual(t, "Hello George!", Greet("George"))
 }
 
 func TestGreetWithTwoOrMoreNamesListsThosePeople(t *testing.T) {
-  expected := "Hello George, Judy, and Astro!"
-  actual := Greet("George", "Judy", "Astro")
-  if actual != expected {
-    t.Errorf("Expected <%v> but was <%v>", expected, actual)
-  }
+  assertEqual(t, "Hello George, Judy, and Astro!", Greet("George", "Judy", "Astro"))
 }
 
+func assertEqual(t *testing.T, expected string, actual string) {
+  if actual != expected {
+    t.Errorf("Expected <%v>, but was <%v>", expected, actual)
+  }
+}
