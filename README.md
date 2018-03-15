@@ -16,5 +16,5 @@ Tests are run with `testing`, organized with [Ginkgo](https://github.com/onsi/gi
 
 - Test once with `ginkgo` or `go test`.  This shows dots for each test kind of like RSpec's default reporter.
 - Show test names as they run with `ginkgo -v` or `go test -ginkgo.v`.
-- Run tests automatically when files are modified with `ginkgo watch` or `bundle exec guard`.
+- Run tests automatically when files are modified with `ginkgo watch`.
 
