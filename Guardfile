@@ -16,7 +16,9 @@
 #   watch(%r{file/path}) { `command(s)` }
 
 guard :shell do
-  watch /(.*).go/ do |m| 
+  watch /(.*).go/ do |m|
+    timestamp = Time.now.strftime('%H:%M:%S')
+    "#{timestamp} #{m[0]} changed"
     `go test`
   end
 end
