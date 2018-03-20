@@ -1,10 +1,19 @@
 package minimax
 
+//import "fmt"
+
 type Board struct {
 	Spaces []Space
+	FindWinner func(Space) string
 }
 
 func (board Board) Minimax() string {
+	for _, space := range board.Spaces {
+		if board.FindWinner(space) == "max" {
+			return space.Id()
+		}
+	}
+
 	for _, space := range board.Spaces {
 		if space.IsAvailable() {
 			return space.Id()
