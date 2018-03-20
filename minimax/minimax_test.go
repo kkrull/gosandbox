@@ -7,6 +7,12 @@ import (
 	//. "github.com/kkrull/gosandbox/minimax"
 )
 
-var _ = Describe("Minimax", func() {
+type Board struct {
 
+}
+
+var _ = Describe("Board", func() {
+	It("can be declared", func() {
+		var _ = Board {}
+	})
 })
