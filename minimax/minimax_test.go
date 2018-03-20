@@ -28,4 +28,24 @@ var _ = Describe("Board", func() {
 		var board = Board{Spaces: allSpaces}
 		Expect(board.Spaces).NotTo(BeNil())
 	})
+
+	Describe("Minimax", func() {
+		It("exists", func() {
+			var openSpaces []OpenSpace
+			openSpaces = append(openSpaces, OpenSpace{IdValue: "A1"})
+
+			var allSpaces []Space
+			for _, space := range openSpaces {
+				allSpaces = append(allSpaces, space)
+			}
+
+			var board = Board{Spaces: allSpaces}
+			board.Minimax()
+		})
+
+		Context("when there is only 1 space available", func() {
+			PIt("picks that space", func() {
+			})
+		})
+	})
 })
