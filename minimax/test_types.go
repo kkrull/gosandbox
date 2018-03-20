@@ -2,28 +2,36 @@ package minimax
 
 /* ClosedSpace */
 
-type ClosedSpace struct {
-	IdValue string
+func ClosedSpace(id string) Space {
+	return closedSpace{id: id}
 }
 
-func (ClosedSpace) Id() string {
+type closedSpace struct {
+	id string
+}
+
+func (closedSpace) Id() string {
 	panic("implement me")
 }
 
-func (ClosedSpace) IsAvailable() bool {
+func (closedSpace) IsAvailable() bool {
 	return false
 }
 
 /* OpenSpace */
 
-type OpenSpace struct {
-	IdValue string
+func OpenSpace(id string) Space {
+	return openSpace{id: id}
 }
 
-func (space OpenSpace) Id() string {
-	return space.IdValue
+type openSpace struct {
+	id string
 }
 
-func (OpenSpace) IsAvailable() bool {
+func (space openSpace) Id() string {
+	return space.id
+}
+
+func (openSpace) IsAvailable() bool {
 	return true
 }
