@@ -4,6 +4,7 @@ type Board struct {
 	Spaces []Space
 }
 
-type Space struct {
-	Id string
+type Space interface {
+	Id() string
+	//IsAvailable() bool
 }

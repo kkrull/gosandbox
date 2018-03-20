@@ -7,12 +7,25 @@ import (
 	. "github.com/kkrull/gosandbox/minimax"
 )
 
+type OpenSpace struct {
+	IdValue string
+}
+
+func (OpenSpace) Id() string {
+	panic("implement me")
+}
+
 var _ = Describe("Board", func() {
 	It("can be declared with spaces", func() {
-		var spaces []Space
-		spaces = append(spaces, Space{Id: "A1"})
+		var openSpaces []OpenSpace
+		openSpaces = append(openSpaces, OpenSpace{IdValue: "A1"})
 
-		var board = Board{Spaces: spaces}
+		var allSpaces []Space
+		for _, space := range openSpaces {
+			allSpaces = append(allSpaces, space)
+		}
+
+		var board = Board{Spaces: allSpaces}
 		Expect(board.Spaces).NotTo(BeNil())
 	})
 })
