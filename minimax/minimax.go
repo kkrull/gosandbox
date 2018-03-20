@@ -2,18 +2,18 @@ package minimax
 
 //import "fmt"
 
-func NewBoard(spaces []Space, findWinner func(Space) string) Board {
+func NewBoard(spaces []Space, findWinner func(string, Space) string) Board {
 	return Board{Spaces: spaces, FindWinner: findWinner}
 }
 
 type Board struct {
 	Spaces     []Space
-	FindWinner func(spaceToTake Space) string
+	FindWinner func(ifPlayer string, claimsSpace Space) string
 }
 
 func (board Board) Minimax(player string) string {
 	for _, space := range board.Spaces {
-		if board.FindWinner(space) == player {
+		if board.FindWinner(player, space) == player {
 			return space.Id()
 		}
 	}
