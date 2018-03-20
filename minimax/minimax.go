@@ -24,19 +24,27 @@ func (board Board) Minimax(player string) (string, int, error) {
 	for _, space := range board.Spaces {
 		if board.FindWinner(player, space) == player {
 			if player == board.maxPlayer {
-				return space.Id(), 1, nil
+				return moveToSpace(space, 1)
 			} else {
-				return space.Id(), -1, nil
+				return moveToSpace(space, -1)
 			}
 		}
 	}
 
 	for _, space := range board.Spaces {
 		if space.IsAvailable() {
-			return space.Id(), 0, nil
+			return moveToSpace(space, 0)
 		}
 	}
 
+	return gameOver()
+}
+
+func moveToSpace(space Space, score int) (string, int, error) {
+	return space.Id(), score, nil
+}
+
+func gameOver() (string, int, error) {
 	return "", 0, fmt.Errorf("the game is already over")
 }
 
