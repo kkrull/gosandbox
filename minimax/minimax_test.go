@@ -9,30 +9,20 @@ import (
 
 var _ = Describe("Board", func() {
 	It("can be declared with spaces", func() {
-		var openSpaces []OpenSpace
-		openSpaces = append(openSpaces, OpenSpace{IdValue: "A1"})
+		var spaces []Space
+		spaces = append(spaces, OpenSpace{IdValue: "A1"})
 
-		var allSpaces []Space
-		for _, space := range openSpaces {
-			allSpaces = append(allSpaces, space)
-		}
-
-		var board = Board{Spaces: allSpaces}
+		var board = Board{Spaces: spaces}
 		Expect(board.Spaces).NotTo(BeNil())
 	})
 
 	Describe("Minimax", func() {
 		Context("when there is only 1 space", func() {
 			It("picks that space", func() {
-				var openSpaces []OpenSpace
-				openSpaces = append(openSpaces, OpenSpace{IdValue: "A1"})
+				var spaces []Space
+				spaces = append(spaces, OpenSpace{IdValue: "A1"})
 
-				var allSpaces []Space
-				for _, space := range openSpaces {
-					allSpaces = append(allSpaces, space)
-				}
-
-				var board = Board{Spaces: allSpaces}
+				var board = Board{Spaces: spaces}
 				Expect(board.Minimax()).To(Equal("A1"))
 			})
 		})
