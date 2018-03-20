@@ -10,7 +10,9 @@ import (
 var _ = Describe("Board", func() {
 	It("can be declared with spaces", func() {
 		var spaces []Space
+		spaces = append(spaces, Space{Id: "A1"})
+
 		var board = Board{Spaces: spaces}
-		Expect(board).NotTo(BeNil())
+		Expect(board.Spaces).NotTo(BeNil())
 	})
 })

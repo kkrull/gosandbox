@@ -5,4 +5,5 @@ type Board struct {
 }
 
 type Space struct {
+	Id string
 }
