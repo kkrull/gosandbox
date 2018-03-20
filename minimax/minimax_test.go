@@ -28,12 +28,17 @@ var _ = Describe("Board", func() {
 		)
 
 		Context("when there are not any available spaces left", func() {
-			It("returns an error, with zero values for everything else", func() {
+			BeforeEach(func() {
 				board = NewBoard("max", "min", []Space{}, nobodyClaimsVictory)
 				space, score, err = board.Minimax("max")
+			})
+
+			It("returns an error", func() {
+				Expect(err).To(MatchError("the game is already over"))
+			})
+			It("returns zero values for everything else", func() {
 				Expect(space).To(Equal(""))
 				Expect(score).To(Equal(0))
-				Expect(err).To(MatchError("the game is already over"))
 			})
 		})
 
@@ -50,33 +55,45 @@ var _ = Describe("Board", func() {
 			It("returns 0 for the score", func() {
 				Expect(score).To(Equal(0))
 			})
+			It("does not return an error", func() {
+				Expect(err).NotTo(HaveOccurred())
+			})
 		})
 
 		Context("when there are 2 or more available spaces with different outcomes", func() {
-			BeforeEach(func() {
-				spaces := []Space{OpenSpace("worthless"), OpenSpace("victory")}
-				board = NewBoard("max", "min", spaces, automaticWin("victory"))
-			})
-
 			Context("when it is the maximizing player's turn", func() {
-				It("picks the space where the maximizing player wins", func() {
+				BeforeEach(func() {
+					spaces := []Space{OpenSpace("worthless"), OpenSpace("victory")}
+					board = NewBoard("max", "min", spaces, automaticWin("victory"))
 					space, score, err = board.Minimax("max")
+				})
+
+				It("picks the space where the maximizing player wins", func() {
 					Expect(space).To(Equal("victory"))
 				})
 				It("returns a positive score for that space", func() {
-					space, score, err = board.Minimax("max")
 					Expect(score).To(Equal(1))
+				})
+				It("does not return an error", func() {
+					Expect(err).NotTo(HaveOccurred())
 				})
 			})
 
 			Context("when it is the minimizing player's turn", func() {
+				BeforeEach(func() {
+					spaces := []Space{OpenSpace("worthless"), OpenSpace("victory")}
+					board = NewBoard("max", "min", spaces, automaticWin("victory"))
+					space, score, err = board.Minimax("min")
+				})
+
 				It("picks the space where the maximizing player loses", func() {
-					space, score, _ = board.Minimax("min")
 					Expect(space).To(Equal("victory"))
 				})
 				It("returns a negative score for that space", func() {
-					space, score, _ = board.Minimax("min")
 					Expect(score).To(Equal(-1))
+				})
+				It("does not return an error", func() {
+					Expect(err).NotTo(HaveOccurred())
 				})
 			})
 		})

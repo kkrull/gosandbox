@@ -24,16 +24,16 @@ func (board Board) Minimax(player string) (string, int, error) {
 	for _, space := range board.Spaces {
 		if board.FindWinner(player, space) == player {
 			if player == board.maxPlayer {
-				return space.Id(), 1, fmt.Errorf("all good in the hood")
+				return space.Id(), 1, nil
 			} else {
-				return space.Id(), -1, fmt.Errorf("all good in the hood")
+				return space.Id(), -1, nil
 			}
 		}
 	}
 
 	for _, space := range board.Spaces {
 		if space.IsAvailable() {
-			return space.Id(), 0, fmt.Errorf("all good in the hood")
+			return space.Id(), 0, nil
 		}
 	}
 
