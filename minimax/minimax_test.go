@@ -30,21 +30,18 @@ var _ = Describe("Board", func() {
 	})
 
 	Describe("Minimax", func() {
-		It("exists", func() {
-			var openSpaces []OpenSpace
-			openSpaces = append(openSpaces, OpenSpace{IdValue: "A1"})
+		Context("when there is only 1 space", func() {
+			It("picks that space", func() {
+				var openSpaces []OpenSpace
+				openSpaces = append(openSpaces, OpenSpace{IdValue: "A1"})
 
-			var allSpaces []Space
-			for _, space := range openSpaces {
-				allSpaces = append(allSpaces, space)
-			}
+				var allSpaces []Space
+				for _, space := range openSpaces {
+					allSpaces = append(allSpaces, space)
+				}
 
-			var board = Board{Spaces: allSpaces}
-			board.Minimax()
-		})
-
-		Context("when there is only 1 space available", func() {
-			PIt("picks that space", func() {
+				var board = Board{Spaces: allSpaces}
+				Expect(board.Minimax()).To(Equal("A1"))
 			})
 		})
 	})
