@@ -9,9 +9,7 @@ import (
 
 var _ = Describe("Board", func() {
 	It("can be declared with spaces", func() {
-		var spaces []Space
-		spaces = append(spaces, OpenSpace{IdValue: "A1"})
-
+		var spaces = []Space { OpenSpace{IdValue: "A1"} }
 		var board = Board{Spaces: spaces}
 		Expect(board.Spaces).NotTo(BeNil())
 	})
@@ -19,9 +17,7 @@ var _ = Describe("Board", func() {
 	Describe("Minimax", func() {
 		Context("when there is only 1 space", func() {
 			It("picks that space", func() {
-				var spaces []Space
-				spaces = append(spaces, OpenSpace{IdValue: "A1"})
-
+				var spaces = []Space { OpenSpace{IdValue: "A1"} }
 				var board = Board{Spaces: spaces}
 				Expect(board.Minimax()).To(Equal("A1"))
 			})
@@ -29,10 +25,7 @@ var _ = Describe("Board", func() {
 
 		Context("when there is only 1 available space", func() {
 			It("picks that space", func() {
-				var spaces []Space
-				spaces = append(spaces, ClosedSpace{IdValue: "A1"})
-				spaces = append(spaces, OpenSpace{IdValue: "A2"})
-
+				var spaces = []Space { ClosedSpace{IdValue: "A1"}, OpenSpace{IdValue: "A2"} }
 				var board = Board{Spaces: spaces}
 				Expect(board.Minimax()).To(Equal("A2"))
 			})
