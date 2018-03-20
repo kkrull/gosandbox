@@ -21,14 +21,8 @@ type Board struct {
 }
 
 func (board Board) Minimax(player string) (string, int, error) {
-	for _, space := range board.Spaces {
-		if board.FindWinner(player, space) == player {
-			if player == board.maxPlayer {
-				return moveToSpace(space, 1)
-			} else {
-				return moveToSpace(space, -1)
-			}
-		}
+	if space, score := board.findWinningSpace(player); space != nil {
+		return moveToSpace(space, score)
 	}
 
 	for _, space := range board.Spaces {
@@ -38,6 +32,20 @@ func (board Board) Minimax(player string) (string, int, error) {
 	}
 
 	return gameOver()
+}
+
+func (board Board) findWinningSpace(player string) (Space, int) {
+	for _, space := range board.Spaces {
+		if board.FindWinner(player, space) == player {
+			if player == board.maxPlayer {
+				return space, 1
+			} else {
+				return space, -1
+			}
+		}
+	}
+
+	return nil, 0
 }
 
 func moveToSpace(space Space, score int) (string, int, error) {
