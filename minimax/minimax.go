@@ -2,8 +2,12 @@ package minimax
 
 //import "fmt"
 
+func NewBoard(spaces []Space, findWinner func(Space) string) Board {
+	return Board{Spaces: spaces, FindWinner: findWinner}
+}
+
 type Board struct {
-	Spaces []Space
+	Spaces     []Space
 	FindWinner func(Space) string
 }
 
