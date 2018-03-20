@@ -26,21 +26,18 @@ var _ = Describe("Board", func() {
 			score int
 		)
 
-		Context("when there is only 1 space", func() {
-			It("picks that space", func() {
-				spaces := []Space{OpenSpace("open")}
-				board = NewBoard("max", "min", spaces, nobodyClaimsVictory)
-				space, _ = board.Minimax("anybody")
-				Expect(space).To(Equal("open"))
-			})
-		})
-
-		Context("when there is only 1 available space", func() {
-			It("picks that space", func() {
+		Context("when none of the available spaces result in victory for either player", func() {
+			BeforeEach(func() {
 				spaces := []Space{ClosedSpace("closed"), OpenSpace("open")}
 				board = NewBoard("max", "min", spaces, nobodyClaimsVictory)
-				space, _ = board.Minimax("anybody")
+				space, score = board.Minimax("max")
+			})
+
+			It("picks the first available space", func() {
 				Expect(space).To(Equal("open"))
+			})
+			It("returns 0 for the score", func() {
+				Expect(score).To(Equal(0))
 			})
 		})
 

@@ -31,7 +31,7 @@ func (board Board) Minimax(player string) (string, int) {
 
 	for _, space := range board.Spaces {
 		if space.IsAvailable() {
-			return space.Id(), 42
+			return space.Id(), 0
 		}
 	}
 
