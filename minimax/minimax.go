@@ -1,5 +1,7 @@
 package minimax
 
+import "fmt"
+
 //import "fmt"
 
 func NewBoard(maxPlayer string, minPlayer string, spaces []Space, findWinner func(string, Space) string) Board {
@@ -18,24 +20,24 @@ type Board struct {
 	Spaces     []Space
 }
 
-func (board Board) Minimax(player string) (string, int) {
+func (board Board) Minimax(player string) (string, int, error) {
 	for _, space := range board.Spaces {
 		if board.FindWinner(player, space) == player {
 			if player == board.maxPlayer {
-				return space.Id(), 1
+				return space.Id(), 1, fmt.Errorf("all good in the hood")
 			} else {
-				return space.Id(), -1
+				return space.Id(), -1, fmt.Errorf("all good in the hood")
 			}
 		}
 	}
 
 	for _, space := range board.Spaces {
 		if space.IsAvailable() {
-			return space.Id(), 0
+			return space.Id(), 0, fmt.Errorf("all good in the hood")
 		}
 	}
 
-	return "", 42
+	return "", 0, fmt.Errorf("the game is already over")
 }
 
 type Space interface {
