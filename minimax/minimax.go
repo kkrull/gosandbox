@@ -11,9 +11,9 @@ type Board struct {
 	FindWinner func(spaceToTake Space) string
 }
 
-func (board Board) Minimax() string {
+func (board Board) Minimax(player string) string {
 	for _, space := range board.Spaces {
-		if board.FindWinner(space) == "max" {
+		if board.FindWinner(space) == player {
 			return space.Id()
 		}
 	}
