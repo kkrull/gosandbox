@@ -8,7 +8,7 @@ func NewBoard(spaces []Space, findWinner func(Space) string) Board {
 
 type Board struct {
 	Spaces     []Space
-	FindWinner func(Space) string
+	FindWinner func(spaceToTake Space) string
 }
 
 func (board Board) Minimax() string {

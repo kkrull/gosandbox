@@ -12,7 +12,7 @@ var _ = Describe("Board", func() {
 		Context("when there is only 1 space", func() {
 			It("picks that space", func() {
 				var spaces = []Space{OpenSpace("A1")}
-				var board = NewBoard(spaces, func(space Space) string { return "" })
+				var board = NewBoard(spaces, func(Space) string { return "" })
 				Expect(board.Minimax()).To(Equal("A1"))
 			})
 		})
@@ -20,7 +20,7 @@ var _ = Describe("Board", func() {
 		Context("when there is only 1 available space", func() {
 			It("picks that space", func() {
 				var spaces = []Space{ClosedSpace("A1"), OpenSpace("A2")}
-				var board = NewBoard(spaces, func(space Space) string { return "" })
+				var board = NewBoard(spaces, func(Space) string { return "" })
 				Expect(board.Minimax()).To(Equal("A2"))
 			})
 		})
@@ -28,7 +28,7 @@ var _ = Describe("Board", func() {
 		Context("when there are 2 or more available spaces with different outcomes", func() {
 			It("picks the space that helps the maximizing player win, when it is that player's turn", func() {
 				var spaces = []Space{OpenSpace("A1"), OpenSpace("A2")}
-				var findWinner = func(space Space) string {
+				var board = NewBoard(spaces, func(space Space) string {
 					switch space.Id() {
 					case "A1":
 						return "min"
@@ -37,9 +37,7 @@ var _ = Describe("Board", func() {
 					}
 
 					return ""
-				}
-
-				var board = NewBoard(spaces, findWinner)
+				})
 				Expect(board.Minimax()).To(Equal("A2"))
 			})
 		})
