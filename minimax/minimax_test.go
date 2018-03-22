@@ -17,13 +17,8 @@ var _ = Describe("Minimax", func() {
 	})
 })
 
-func CompletedGame() Game {
-	return GameState{}
-}
+func CompletedGame() Game { return completedGame{} }
 
-type GameState struct {
-}
+type completedGame struct{}
 
-func (GameState) IsOver() bool {
-	return true
-}
+func (completedGame) IsOver() bool { return true }

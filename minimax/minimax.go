@@ -4,10 +4,10 @@ import "errors"
 
 func Minimax(game Game) (result Move, err error) {
 	if game.IsOver() {
-		return "", errors.New("minimax: game over")
+		return nil, errors.New("minimax: game over")
 	}
 
-	return "", nil
+	return nil, nil
 }
 
 type Move interface {
