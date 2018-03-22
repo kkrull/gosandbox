@@ -10,10 +10,11 @@ func Minimax(game Game) (result Move, err error) {
 	return game.AvailableSpaces()[0], nil
 }
 
-type Move interface {
-}
+type Move interface {}
 
 type Game interface {
-	AvailableSpaces() []string
+	AvailableSpaces() []Space
 	IsOver() bool
 }
+
+type Space interface{}

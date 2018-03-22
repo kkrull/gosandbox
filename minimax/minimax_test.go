@@ -18,40 +18,33 @@ var _ = Describe("Minimax", func() {
 
 	Context("when there is only 1 available move", func() {
 		It("picks that move", func() {
-			onlySpace := "Mountain"
-			game := OneMoveLeftGame(onlySpace)
-			move, _ := Minimax(game)
-			Expect(move).To(Equal(onlySpace))
+			game := OneMoveLeftGame("Mountain")
+			Expect(Minimax(game)).To(Equal("Mountain"))
 		})
 	})
 })
+
+
+/* completeGame */
 
 func CompletedGame() Game {
 	return completedGame{}
 }
 
 type completedGame struct{}
+func (completedGame) AvailableSpaces() []Space { return []Space{} }
+func (completedGame) IsOver() bool { return true }
 
-func (completedGame) AvailableSpaces() []string {
-	return []string{}
-}
 
-func (completedGame) IsOver() bool {
-	return true
-}
+/* incompleteGame */
 
-func OneMoveLeftGame(space string) Game {
-	return incompleteGame{OpenSpaces: []string{space}}
+func OneMoveLeftGame(space Space) Game {
+	return incompleteGame{OpenSpaces: []Space{space}}
 }
 
 type incompleteGame struct {
-	OpenSpaces []string
+	OpenSpaces []Space
 }
 
-func (g incompleteGame) AvailableSpaces() []string {
-	return g.OpenSpaces
-}
-
-func (incompleteGame) IsOver() bool {
-	return false
-}
+func (g incompleteGame) AvailableSpaces() []Space { return g.OpenSpaces }
+func (incompleteGame) IsOver() bool { return false }
