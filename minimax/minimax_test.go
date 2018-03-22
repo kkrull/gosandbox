@@ -23,3 +23,7 @@ func CompletedGame() Game {
 
 type GameState struct {
 }
+
+func (GameState) IsOver() bool {
+	return true
+}
