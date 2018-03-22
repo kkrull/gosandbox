@@ -8,10 +8,6 @@ import (
 )
 
 var _ = Describe("Minimax", func() {
-	It("exists", func() {
-		Minimax()
-	})
-
 	Context("when the game is over", func() {
 		It("returns an error", func() {
 			_, err := Minimax()
