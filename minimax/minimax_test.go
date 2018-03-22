@@ -18,7 +18,7 @@ var _ = Describe("Minimax", func() {
 
 	Context("when there is only 1 available space", func() {
 		It("picks that space", func() {
-			game := OneSpaceLeftGame("Mountain")
+			game := SingleSpaceGame("Mountain")
 			Expect(Minimax(game)).To(Equal("Mountain"))
 		})
 	})
@@ -26,12 +26,73 @@ var _ = Describe("Minimax", func() {
 	Context("when there are 2 of more available spaces", func() {
 		Context("when it is the maximizing player's turn", func() {
 			It("picks that move that causes the maximizing player to win", func() {
-				game := MultiSpaceGame(EmptySpace("_"), FlagSpace("F"))
+				game := CaptureTheFlagGame(EmptySpace("_"), FlagSpace("F"))
 				Expect(Minimax(game)).To(Equal("F"))
 			})
 		})
 	})
 })
+
+
+/* captureTheFlagGame */
+
+func CaptureTheFlagGame(emptySpace Space, flagSpace Space) Game {
+	return captureTheFlagGame{
+		flagSpace: flagSpace,
+		openSpaces: []Space{emptySpace, flagSpace},
+	}
+}
+
+type captureTheFlagGame struct {
+	flagSpace Space
+	openSpaces []Space
+}
+
+func (game captureTheFlagGame) ClaimSpace(claimed Space) Game {
+	if claimed == game.flagSpace {
+		return completedGame{}
+	}
+
+	var unclaimedSpaces []Space
+	for _, openSpace := range game.openSpaces {
+		if openSpace != claimed {
+			unclaimedSpaces = append(unclaimedSpaces, openSpace)
+		}
+	}
+
+	return captureTheFlagGame{
+		flagSpace: game.flagSpace,
+		openSpaces: unclaimedSpaces,
+	}
+}
+
+func (captureTheFlagGame) IsOver() bool { return false }
+func (game captureTheFlagGame) OpenSpaces() []Space { return game.openSpaces }
+
+func EmptySpace(id string) Space {
+	return id
+}
+
+func FlagSpace(id string) Space {
+	return id
+}
+
+
+/* singleSpaceGame */
+
+func SingleSpaceGame(space Space) Game {
+	return singleSpaceGame{openSpaces: []Space{space}}
+}
+
+type singleSpaceGame struct {
+	openSpaces []Space
+}
+
+func (singleSpaceGame) IsOver() bool { return false }
+func (g singleSpaceGame) OpenSpaces() []Space { return g.openSpaces }
+func (g singleSpaceGame) ClaimSpace(claimed Space) Game {
+	return completedGame{}
+}
 
 
 /* completeGame */
@@ -44,42 +105,3 @@ type completedGame struct{}
 func (completedGame) ClaimSpace(Space) Game { panic("game is already over") }
 func (completedGame) IsOver() bool { return true }
 func (completedGame) OpenSpaces() []Space { return []Space{} }
-
-
-/* incompleteGame */
-
-func MultiSpaceGame(spaces ...Space) Game {
-	return incompleteGame{openSpaces: spaces}
-}
-
-func OneSpaceLeftGame(space Space) Game {
-	return incompleteGame{openSpaces: []Space{space}}
-}
-
-type incompleteGame struct {
-	openSpaces []Space
-}
-
-func (incompleteGame) IsOver() bool { return false }
-func (g incompleteGame) OpenSpaces() []Space { return g.openSpaces }
-func (g incompleteGame) ClaimSpace(space Space) Game {
-	var unclaimedSpaces []Space
-	for _, openSpace := range g.openSpaces {
-		if openSpace != openSpace {
-			unclaimedSpaces = append(unclaimedSpaces, space)
-		}
-	}
-
-	return incompleteGame{openSpaces: unclaimedSpaces}
-}
-
-
-/* Spaces */
-
-func EmptySpace(id string) Space {
-	return id
-}
-
-func FlagSpace(id string) Space {
-	return id
-}
