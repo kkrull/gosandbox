@@ -44,19 +44,19 @@ func FlagSpace(id string) Space {
 }
 
 
-/* singleSpaceGame */
+/* kingOfTheMountainGame */
 
-func SingleSpaceGame(space Space) Game {
-	return singleSpaceGame{openSpaces: []Space{space}}
+func KingOfTheMountainGame(space Space) Game {
+	return kingOfTheMountainGame{openSpaces: []Space{space}}
 }
 
-type singleSpaceGame struct {
+type kingOfTheMountainGame struct {
 	openSpaces []Space
 }
 
-func (singleSpaceGame) IsOver() bool { return false }
-func (g singleSpaceGame) OpenSpaces() []Space { return g.openSpaces }
-func (g singleSpaceGame) ClaimSpace(claimed Space) Game {
+func (kingOfTheMountainGame) IsOver() bool { return false }
+func (g kingOfTheMountainGame) OpenSpaces() []Space { return g.openSpaces }
+func (g kingOfTheMountainGame) ClaimSpace(claimed Space) Game {
 	return completedGame{}
 }
 
