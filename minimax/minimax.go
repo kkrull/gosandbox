@@ -2,13 +2,13 @@ package minimax
 
 import "errors"
 
-func Minimax(game Game) (result Move, err error) {
+func Minimax(player Player, game Game) (result Move, err error) {
 	if game.IsOver() {
 		return nil, errors.New("minimax: game over")
 	}
 
 	for _, space := range game.OpenSpaces() {
-		gameWouldBe := game.ClaimSpace(space)
+		gameWouldBe := game.ClaimSpace(player, space)
 		if gameWouldBe.IsOver() {
 			return space, nil
 		}
@@ -20,9 +20,11 @@ func Minimax(game Game) (result Move, err error) {
 type Move interface {}
 
 type Game interface {
-	ClaimSpace(Space) Game
+	ClaimSpace(Player, Space) Game
 	IsOver() bool
 	OpenSpaces() []Space
 }
+
+type Player interface {}
 
 type Space interface{}

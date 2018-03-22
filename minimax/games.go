@@ -14,7 +14,7 @@ type captureTheFlagGame struct {
 	openSpaces []Space
 }
 
-func (game captureTheFlagGame) ClaimSpace(claimed Space) Game {
+func (game captureTheFlagGame) ClaimSpace(player Player, claimed Space) Game {
 	if claimed == game.flagSpace {
 		return completedGame{}
 	}
@@ -56,7 +56,7 @@ type kingOfTheMountainGame struct {
 
 func (kingOfTheMountainGame) IsOver() bool { return false }
 func (g kingOfTheMountainGame) OpenSpaces() []Space { return g.openSpaces }
-func (g kingOfTheMountainGame) ClaimSpace(claimed Space) Game {
+func (g kingOfTheMountainGame) ClaimSpace(Player, Space) Game {
 	return completedGame{}
 }
 
@@ -68,6 +68,6 @@ func CompletedGame() Game {
 }
 
 type completedGame struct{}
-func (completedGame) ClaimSpace(Space) Game { panic("game is already over") }
+func (completedGame) ClaimSpace(Player, Space) Game { panic("game is already over") }
 func (completedGame) IsOver() bool { return true }
 func (completedGame) OpenSpaces() []Space { return []Space{} }
