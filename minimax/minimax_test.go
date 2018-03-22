@@ -16,10 +16,19 @@ var _ = Describe("Minimax", func() {
 		})
 	})
 
-	Context("when there is only 1 available move", func() {
-		It("picks that move", func() {
-			game := OneMoveLeftGame("Mountain")
+	Context("when there is only 1 available space", func() {
+		It("picks that space", func() {
+			game := OneSpaceLeftGame("Mountain")
 			Expect(Minimax(game)).To(Equal("Mountain"))
+		})
+	})
+
+	Context("when there are 2 of more available spaces", func() {
+		Context("when it is the maximizing player's turn", func() {
+			It("picks that move that causes the maximizing player to win", func() {
+				game := MultiSpaceGame(EmptySpace("_"), FlagSpace("F"))
+				Expect(Minimax(game)).To(Equal("F"))
+			})
 		})
 	})
 })
@@ -38,7 +47,11 @@ func (completedGame) OpenSpaces() []Space { return []Space{} }
 
 /* incompleteGame */
 
-func OneMoveLeftGame(space Space) Game {
+func MultiSpaceGame(spaces ...Space) Game {
+	return incompleteGame{openSpaces: spaces}
+}
+
+func OneSpaceLeftGame(space Space) Game {
 	return incompleteGame{openSpaces: []Space{space}}
 }
 
@@ -48,3 +61,14 @@ type incompleteGame struct {
 
 func (incompleteGame) IsOver() bool { return false }
 func (g incompleteGame) OpenSpaces() []Space { return g.openSpaces }
+
+
+/* Spaces */
+
+func EmptySpace(id string) Space {
+	return id
+}
+
+func FlagSpace(id string) Space {
+	return id
+}
