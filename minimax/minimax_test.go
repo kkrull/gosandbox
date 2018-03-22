@@ -41,6 +41,7 @@ func CompletedGame() Game {
 }
 
 type completedGame struct{}
+func (completedGame) ClaimSpace(Space) Game { panic("game is already over") }
 func (completedGame) IsOver() bool { return true }
 func (completedGame) OpenSpaces() []Space { return []Space{} }
 
@@ -61,6 +62,16 @@ type incompleteGame struct {
 
 func (incompleteGame) IsOver() bool { return false }
 func (g incompleteGame) OpenSpaces() []Space { return g.openSpaces }
+func (g incompleteGame) ClaimSpace(space Space) Game {
+	var unclaimedSpaces []Space
+	for _, openSpace := range g.openSpaces {
+		if openSpace != openSpace {
+			unclaimedSpaces = append(unclaimedSpaces, space)
+		}
+	}
+
+	return incompleteGame{openSpaces: unclaimedSpaces}
+}
 
 
 /* Spaces */
