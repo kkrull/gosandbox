@@ -7,14 +7,14 @@ func Minimax(game Game) (result Move, err error) {
 		return nil, errors.New("minimax: game over")
 	}
 
-	return game.AvailableSpaces()[0], nil
+	return game.OpenSpaces()[0], nil
 }
 
 type Move interface {}
 
 type Game interface {
-	AvailableSpaces() []Space
 	IsOver() bool
+	OpenSpaces() []Space
 }
 
 type Space interface{}

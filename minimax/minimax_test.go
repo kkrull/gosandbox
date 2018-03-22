@@ -32,19 +32,19 @@ func CompletedGame() Game {
 }
 
 type completedGame struct{}
-func (completedGame) AvailableSpaces() []Space { return []Space{} }
 func (completedGame) IsOver() bool { return true }
+func (completedGame) OpenSpaces() []Space { return []Space{} }
 
 
 /* incompleteGame */
 
 func OneMoveLeftGame(space Space) Game {
-	return incompleteGame{OpenSpaces: []Space{space}}
+	return incompleteGame{openSpaces: []Space{space}}
 }
 
 type incompleteGame struct {
-	OpenSpaces []Space
+	openSpaces []Space
 }
 
-func (g incompleteGame) AvailableSpaces() []Space { return g.OpenSpaces }
 func (incompleteGame) IsOver() bool { return false }
+func (g incompleteGame) OpenSpaces() []Space { return g.openSpaces }
