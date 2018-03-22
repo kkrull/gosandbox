@@ -10,8 +10,16 @@ import (
 var _ = Describe("Minimax", func() {
 	Context("when the game is over", func() {
 		It("returns an error", func() {
-			_, err := Minimax()
+			game := CompletedGame()
+			_, err := Minimax(game)
 			Expect(err).To(MatchError("minimax: game over"))
 		})
 	})
 })
+
+func CompletedGame() Game {
+	return GameState{}
+}
+
+type GameState struct {
+}
