@@ -26,8 +26,8 @@ var _ = Describe("Minimax", func() {
 	Context("when there are 2 of more available spaces", func() {
 		Context("when it is the maximizing player's turn", func() {
 			It("picks the move that causes the maximizing player to win", func() {
-				game := CaptureTheFlagGame(EmptySpace("_"), FlagSpace("F"))
-				Expect(Minimax("Max", game)).To(Equal("F"))
+				game := CaptureTheFlagGame(InstantWinSpace("Min"), InstantWinSpace("Max"))
+				Expect(Minimax("Max", game)).To(Equal("Max"))
 			})
 		})
 	})

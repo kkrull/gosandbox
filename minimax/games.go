@@ -1,46 +1,38 @@
 package minimax
 
+import "fmt"
+
 /* captureTheFlagGame */
 
-func CaptureTheFlagGame(emptySpace Space, flagSpace Space) Game {
-	return captureTheFlagGame{
-		flagSpace: flagSpace,
-		openSpaces: []Space{emptySpace, flagSpace},
-	}
+func CaptureTheFlagGame(oneBase Space, otherBase Space) Game {
+	return captureTheFlagGame{ oneBase, otherBase }
 }
 
 type captureTheFlagGame struct {
-	flagSpace Space
-	openSpaces []Space
+	oneBase Space
+	otherBase Space
 }
 
 func (game captureTheFlagGame) ClaimSpace(player Player, claimed Space) Game {
-	if claimed == game.flagSpace {
-		return completedGame{}
+	fmt.Printf("player %v claims %v\n", player, claimed)
+	if player == "Max" && claimed == "Min" {
+		return victoryGame{Winner: player}
+	} else if player == "Min" && claimed == "Max" {
+		return victoryGame{Winner: player}
+	} else {
+		return CompletedGame() //Draw
 	}
 
-	var unclaimedSpaces []Space
-	for _, openSpace := range game.openSpaces {
-		if openSpace != claimed {
-			unclaimedSpaces = append(unclaimedSpaces, openSpace)
-		}
-	}
-
-	return captureTheFlagGame{
-		flagSpace: game.flagSpace,
-		openSpaces: unclaimedSpaces,
-	}
+	panic("Expected somebody to win")
 }
 
 func (captureTheFlagGame) IsOver() bool { return false }
-func (game captureTheFlagGame) OpenSpaces() []Space { return game.openSpaces }
-
-func EmptySpace(id string) Space {
-	return id
+func (game captureTheFlagGame) OpenSpaces() []Space {
+	return []Space { game.oneBase, game.otherBase }
 }
 
-func FlagSpace(id string) Space {
-	return id
+func InstantWinSpace(forPlayer Player) Space {
+	return forPlayer
 }
 
 
@@ -59,6 +51,17 @@ func (g kingOfTheMountainGame) OpenSpaces() []Space { return g.openSpaces }
 func (g kingOfTheMountainGame) ClaimSpace(Player, Space) Game {
 	return completedGame{}
 }
+
+
+/* victoryGame */
+
+type victoryGame struct {
+	Winner Player
+}
+
+func (victoryGame) ClaimSpace(Player, Space) Game { panic("game over") }
+func (victoryGame) IsOver() bool { return true }
+func (victoryGame) OpenSpaces() []Space { return []Space{} }
 
 
 /* completeGame */
