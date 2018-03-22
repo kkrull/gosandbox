@@ -1,6 +1,8 @@
 package minimax
 
-import "errors"
+import (
+	"errors"
+)
 
 func Minimax(player Player, game Game) (result Move, err error) {
 	if game.IsOver() {
@@ -9,7 +11,7 @@ func Minimax(player Player, game Game) (result Move, err error) {
 
 	for _, space := range game.OpenSpaces() {
 		gameWouldBe := game.ClaimSpace(player, space)
-		if gameWouldBe.IsOver() {
+		if gameWouldBe.FindWinner() == player {
 			return space, nil
 		}
 	}
@@ -21,6 +23,7 @@ type Move interface {}
 
 type Game interface {
 	ClaimSpace(Player, Space) Game
+	FindWinner() Player
 	IsOver() bool
 	OpenSpaces() []Space
 }

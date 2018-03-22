@@ -10,7 +10,7 @@ import (
 var _ = Describe("Minimax", func() {
 	Context("when the game is over", func() {
 		It("returns an error", func() {
-			game := CompletedGame()
+			game := DrawGame()
 			_, err := Minimax("anybody", game)
 			Expect(err).To(MatchError("minimax: game over"))
 		})
@@ -26,8 +26,8 @@ var _ = Describe("Minimax", func() {
 	Context("when there are 2 of more available spaces", func() {
 		Context("when it is the maximizing player's turn", func() {
 			It("picks the move that causes the maximizing player to win", func() {
-				game := CaptureTheFlagGame(InstantWinSpace("Min"), InstantWinSpace("Max"))
-				Expect(Minimax("Max", game)).To(Equal("Max"))
+				game := CaptureTheFlagGame(HomeBaseSpace("MaxBase"), HomeBaseSpace("MinBase"))
+				Expect(Minimax("Max", game)).To(Equal("MinBase"))
 			})
 		})
 	})

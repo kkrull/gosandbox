@@ -1,7 +1,5 @@
 package minimax
 
-import "fmt"
-
 /* captureTheFlagGame */
 
 func CaptureTheFlagGame(oneBase Space, otherBase Space) Game {
@@ -14,25 +12,25 @@ type captureTheFlagGame struct {
 }
 
 func (game captureTheFlagGame) ClaimSpace(player Player, claimed Space) Game {
-	fmt.Printf("player %v claims %v\n", player, claimed)
-	if player == "Max" && claimed == "Min" {
+	if player == "Max" && claimed == "MinBase" {
 		return victoryGame{Winner: player}
-	} else if player == "Min" && claimed == "Max" {
+	} else if player == "Min" && claimed == "MaxBase" {
 		return victoryGame{Winner: player}
 	} else {
-		return CompletedGame() //Draw
+		return DrawGame()
 	}
 
 	panic("Expected somebody to win")
 }
 
+func (captureTheFlagGame) FindWinner() Player { return nil }
 func (captureTheFlagGame) IsOver() bool { return false }
 func (game captureTheFlagGame) OpenSpaces() []Space {
 	return []Space { game.oneBase, game.otherBase }
 }
 
-func InstantWinSpace(forPlayer Player) Space {
-	return forPlayer
+func HomeBaseSpace(ofPlayer Player) Space {
+	return ofPlayer
 }
 
 
@@ -47,9 +45,10 @@ type kingOfTheMountainGame struct {
 }
 
 func (kingOfTheMountainGame) IsOver() bool { return false }
+func (kingOfTheMountainGame) FindWinner() Player { return nil }
 func (g kingOfTheMountainGame) OpenSpaces() []Space { return g.openSpaces }
-func (g kingOfTheMountainGame) ClaimSpace(Player, Space) Game {
-	return completedGame{}
+func (g kingOfTheMountainGame) ClaimSpace(player Player, space Space) Game {
+	return victoryGame{Winner: player}
 }
 
 
@@ -60,17 +59,19 @@ type victoryGame struct {
 }
 
 func (victoryGame) ClaimSpace(Player, Space) Game { panic("game over") }
+func (g victoryGame) FindWinner() Player { return g.Winner }
 func (victoryGame) IsOver() bool { return true }
 func (victoryGame) OpenSpaces() []Space { return []Space{} }
 
 
-/* completeGame */
+/* drawGame */
 
-func CompletedGame() Game {
-	return completedGame{}
+func DrawGame() Game {
+	return drawGame{}
 }
 
-type completedGame struct{}
-func (completedGame) ClaimSpace(Player, Space) Game { panic("game is already over") }
-func (completedGame) IsOver() bool { return true }
-func (completedGame) OpenSpaces() []Space { return []Space{} }
+type drawGame struct{}
+func (drawGame) ClaimSpace(Player, Space) Game { panic("game is already over") }
+func (drawGame) FindWinner() Player { return nil }
+func (drawGame) IsOver() bool { return true }
+func (drawGame) OpenSpaces() []Space { return []Space{} }
