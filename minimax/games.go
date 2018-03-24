@@ -1,8 +1,6 @@
 package minimax
 
-import (
-	"fmt"
-)
+import "fmt"
 
 /* EndGame */
 
@@ -11,10 +9,6 @@ func EndGame() Game {
 }
 
 type endGame struct{}
-
-func (endGame) ClaimedSpaces() map[string]string {
-	panic("implement me")
-}
 
 func (endGame) OpponentPlayer() string {
 	return "Opponent"
@@ -52,10 +46,6 @@ type openGame struct {
 	availableSpaces []Space
 }
 
-func (game openGame) ClaimedSpaces() map[string]string {
-	panic("implement me")
-}
-
 func (game openGame) OpponentPlayer() string {
 	return game.opponentName
 }
@@ -66,25 +56,16 @@ func (game openGame) ClaimSpace(claimed Space) Game {
 }
 
 func (game openGame) Score() int {
-	var claims map[string]string = game.ClaimedSpaces()
-	if claims["PlayerWins"] == "Player" {
+	switch game.availableSpaces[0] {
+	case "OpponentWins":
 		return 1
-	} else if claims["OpponentWins"] == "Opponent" {
+	case "PlayerWins":
 		return -1
+	case "Useless":
+		return 1
+	default:
+		panic(fmt.Sprintf("Unknown score for remaining space %v", game.availableSpaces[0]))
 	}
-
-	//switch game.availableSpaces[0] {
-	//case "OpponentWins":
-	//	return 1
-	//case "PlayerWins":
-	//	return -1
-	//case "Useless":
-	//	return 1
-	//default:
-	//panic(fmt.Sprintf("Unknown score for remaining space %v", game.availableSpaces))
-	//}
-
-	panic(fmt.Sprintf("Unknown score for remaining space %v", game.availableSpaces))
 }
 
 func (game openGame) AvailableSpaces() []Space {
@@ -135,7 +116,7 @@ func (game twoStepGame) IsOver() bool {
 }
 
 func (twoStepGame) Score() int {
-	panic(fmt.Sprintf("Figure out how to score"))
+	panic("implement me")
 }
 
 func (twoStepGame) OpponentPlayer() string {

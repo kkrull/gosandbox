@@ -39,7 +39,6 @@ func Minimax(game Game, player string) (space Space, err error) {
 type Game interface {
 	AvailableSpaces() []Space
 	ClaimSpace(Space) Game
-	ClaimedSpaces() map[string]string
 	IsOver() bool
 	Score() int
 	OpponentPlayer() string
