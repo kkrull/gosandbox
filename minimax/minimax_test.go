@@ -2,13 +2,26 @@ package minimax_test
 
 import (
 	. "github.com/onsi/ginkgo"
-	//. "github.com/onsi/gomega"
+	. "github.com/onsi/gomega"
 
 	. "github.com/kkrull/gosandbox/minimax"
 )
 
+func GameOver() Game {
+	return 42
+}
+
 var _ = Describe("Minimax", func() {
 	It("exists", func() {
-		Minimax()
+		Minimax(GameOver())
+	})
+
+	Context("when the game is over", func() {
+		It("returns an error", func() {
+			game := GameOver()
+			_, err := Minimax(game)
+			Expect(err).To(HaveOccurred())
+			Expect(err).To(MatchError("the game is already over"))
+		})
 	})
 })
