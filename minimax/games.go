@@ -8,6 +8,10 @@ func GameOver() Game {
 
 type gameOver struct { }
 
+func (gameOver) OpenSpaces() []Space {
+	return nil
+}
+
 func (gameOver) IsOver() bool {
 	return true
 }
@@ -15,10 +19,17 @@ func (gameOver) IsOver() bool {
 /* QuickDraw */
 
 func QuickDrawGame(winningSpace Space) Game {
-	return quickDrawGame{}
+	return quickDrawGame{winningSpace: winningSpace}
 }
 
 type quickDrawGame struct {
+	winningSpace Space
+}
+
+func (game quickDrawGame) OpenSpaces() []Space {
+	spaces := make([]Space, 0)
+	spaces = append(spaces, game.winningSpace)
+	return spaces
 }
 
 func (quickDrawGame) IsOver() bool {

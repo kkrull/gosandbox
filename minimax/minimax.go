@@ -7,11 +7,13 @@ func Minimax(game Game) (space Space, err error) {
 		return "", fmt.Errorf("the game is already over")
 	}
 
-	return "Victory", nil
+	space = game.OpenSpaces()[0]
+	return space, nil
 	//return 0, fmt.Errorf("unable to pick a space")
 }
 
 type Game interface {
+	OpenSpaces() []Space
 	IsOver() bool
 }
 
