@@ -10,6 +10,7 @@ import (
 var _ = Describe("Minimax", func() {
 	var (
 		game  Game
+		result Result
 		space Space
 		err   error
 	)
@@ -25,7 +26,8 @@ var _ = Describe("Minimax", func() {
 	Context("when the game is still going", func() {
 		BeforeEach(func() {
 			game = QuickDrawGame("Victory")
-			space, err = Minimax(game)
+			result, err = Minimax(game)
+			space = result.Space
 		})
 
 		It("returns an available space", func() {
@@ -33,6 +35,15 @@ var _ = Describe("Minimax", func() {
 		})
 		It("does not return an error", func() {
 			Expect(err).To(BeNil())
+		})
+	})
+
+	Context("when there are 2 or more open spaces, each with different outcomes", func() {
+		XIt("returns the space with the higher score", func() {
+			game = CaptureTheFlagGame()
+			result, err = Minimax(game)
+			space = result.Space
+			Expect(space).To(Equal("MinBase"))
 		})
 	})
 })

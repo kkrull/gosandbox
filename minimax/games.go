@@ -35,3 +35,29 @@ func (game quickDrawGame) OpenSpaces() []Space {
 func (quickDrawGame) IsOver() bool {
 	return false
 }
+
+/* CaptureTheFlag */
+
+
+func CaptureTheFlagGame() Game {
+	return captureTheFlagGame{
+		maxBase: "MaxBase",
+		minBase: "MinBase",
+	}
+}
+
+type captureTheFlagGame struct {
+	maxBase Space
+	minBase Space
+}
+
+func (game captureTheFlagGame) OpenSpaces() []Space {
+	return []Space {
+		game.maxBase,
+		game.minBase,
+	}
+}
+
+func (game captureTheFlagGame) IsOver() bool {
+	return len(game.OpenSpaces()) == 0
+}
