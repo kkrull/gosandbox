@@ -8,7 +8,13 @@ import (
 )
 
 func GameOver() Game {
-	return 42
+	return gameOver{}
+}
+
+type gameOver struct { }
+
+func (gameOver) IsOver() bool {
+	return true
 }
 
 var _ = Describe("Minimax", func() {
@@ -20,7 +26,6 @@ var _ = Describe("Minimax", func() {
 		It("returns an error", func() {
 			game := GameOver()
 			_, err := Minimax(game)
-			Expect(err).To(HaveOccurred())
 			Expect(err).To(MatchError("the game is already over"))
 		})
 	})
