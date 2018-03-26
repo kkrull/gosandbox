@@ -24,6 +24,3 @@ type quickDrawGame struct {
 func (quickDrawGame) IsOver() bool {
 	return false
 }
-
-type Space interface {
-}

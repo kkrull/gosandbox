@@ -2,7 +2,7 @@ package minimax
 
 import "fmt"
 
-func Minimax(game Game) (result string, err error) {
+func Minimax(game Game) (space Space, err error) {
 	if game.IsOver() {
 		return "", fmt.Errorf("the game is already over")
 	}
@@ -13,4 +13,7 @@ func Minimax(game Game) (result string, err error) {
 
 type Game interface {
 	IsOver() bool
+}
+
+type Space interface {
 }
