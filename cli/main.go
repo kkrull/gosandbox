@@ -12,10 +12,13 @@ func main() {
 		fmt.Printf("- %d: %s\n", i, arg)
 	}
 
-	flagSet := flag.NewFlagSet("custom program", flag.ExitOnError)
+	flagSet := flag.NewFlagSet("custom program", flag.ContinueOnError)
 	var port = flagSet.Uint("p", 0, "TCP port number")
-	parseError := flagSet.Parse([]string {"-p", "50"})
-	if parseError != nil {
+	parseError := flagSet.Parse(os.Args[1:])
+	if parseError == flag.ErrHelp {
+		fmt.Printf("Asked for help")
+		os.Exit(0)
+	} else if parseError != nil {
 		fmt.Printf("Failed to parse arguments: %s\n", parseError.Error())
 		os.Exit(1)
 	}
