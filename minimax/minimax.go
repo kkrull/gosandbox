@@ -1,7 +1,13 @@
 package minimax
 
 func Minimax(game Game, player string) Result {
-	return Result{Score: 1}
+	if player == "Max" {
+		return Result{Score: 1}
+	} else if player == "Min" {
+		return Result{Score: -1}
+	}
+
+	panic("Expected a result")
 }
 
 type Game interface {
