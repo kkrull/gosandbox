@@ -8,7 +8,14 @@ import (
 )
 
 var _ = Describe("Minimax", func() {
-	It("Exists", func() {
-		Expect(Minimax()).To(BeZero())
+	Context("given a game that the maximizing player has won", func() {
+		It("scores that game as +1", func() {
+			game := VictoryGame{Winner: "Max"}
+			Expect(Minimax(game, "Max")).To(BeEquivalentTo(Result{Score: 1}))
+		})
 	})
 })
+
+type VictoryGame struct {
+	Winner string
+}
