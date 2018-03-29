@@ -28,8 +28,18 @@ var _ = Describe("Minimax", func() {
 			Expect(Minimax(game, "Max")).To(BeEquivalentTo(Result{Score: 0}))
 		})
 	})
-	
 
+	Context("given a game that is not over yet", func() {
+		Context("when it is the maximizing player's turn", func() {
+			XIt("picks a move where the maximizing player wins", func() {
+				game := DuelGame{Space: "Victory"}
+				Expect(Minimax(game, "Max")).To(BeEquivalentTo(Result{
+					Space: "Victory",
+					Score: 1,
+				}))
+			})
+		})
+	})
 })
 
 type CompletedGame struct {
@@ -40,3 +50,18 @@ func (game CompletedGame) FindWinner() string {
 	return game.Winner
 }
 
+func (CompletedGame) IsOver() bool {
+	return true
+}
+
+type DuelGame struct {
+	Space string
+}
+
+func (DuelGame) FindWinner() string {
+	return ""
+}
+
+func (DuelGame) IsOver() bool {
+	return false
+}

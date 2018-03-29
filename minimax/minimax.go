@@ -6,15 +6,21 @@ func Minimax(game Game, player string) Result {
 		return Result{Score: 1}
 	case "Min":
 		return Result{Score: -1}
-	default:
+	}
+
+	if game.IsOver() {
 		return Result{Score: 0}
 	}
+
+	panic("No decision")
 }
 
 type Game interface {
 	FindWinner() string
+	IsOver() bool
 }
 
 type Result struct {
 	Score int
+	Space string
 }
