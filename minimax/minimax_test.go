@@ -39,6 +39,16 @@ var _ = Describe("Minimax", func() {
 				}))
 			})
 		})
+
+		Context("when it is the minimizing player's turn", func() {
+			It("picks a move where the maximizing player loses", func() {
+				game := DuelGame{Space: "Victory"}
+				Expect(Minimax(game, "Min")).To(BeEquivalentTo(Result{
+					Space: "Victory",
+					Score: -1,
+				}))
+			})
+		})
 	})
 })
 
