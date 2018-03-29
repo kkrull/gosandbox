@@ -31,7 +31,7 @@ var _ = Describe("Minimax", func() {
 
 	Context("given a game that is not over yet", func() {
 		Context("when it is the maximizing player's turn", func() {
-			XIt("picks a move where the maximizing player wins", func() {
+			It("picks a move where the maximizing player wins", func() {
 				game := DuelGame{Space: "Victory"}
 				Expect(Minimax(game, "Max")).To(BeEquivalentTo(Result{
 					Space: "Victory",
@@ -54,6 +54,10 @@ func (CompletedGame) IsOver() bool {
 	return true
 }
 
+func (game CompletedGame) LegalMoves(player string) []Move {
+	return []Move{}
+}
+
 type DuelGame struct {
 	Space string
 }
@@ -64,4 +68,13 @@ func (DuelGame) FindWinner() string {
 
 func (DuelGame) IsOver() bool {
 	return false
+}
+
+func (game DuelGame) LegalMoves(player string) []Move {
+	return []Move{
+		Move{
+			Game: CompletedGame{Winner: player},
+			ClaimedSpace: game.Space,
+		},
+	}
 }
