@@ -50,6 +50,14 @@ var _ = Describe("Minimax", func() {
 			})
 		})
 	})
+
+	Context("when there are multiple moves to consider", func() {
+		Context("when it is the maximizing player's turn", func() {
+			It("picks the space that leads to immediate victory for the maximizing player", func() {
+				//TODO - set up a board with a useless space and a winning space, so Minimax has to loop over Game#LegalMoves
+			})
+		})
+	})
 })
 
 type CompletedGame struct {
