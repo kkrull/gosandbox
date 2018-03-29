@@ -21,8 +21,20 @@ var _ = Describe("Minimax", func() {
 			Expect(Minimax(game, "Min")).To(BeEquivalentTo(Result{Score: -1}))
 		})
 	})
+
+	Context("given a game ending in a draw", func() {
+		It("scores that game as -1", func() {
+			game := VictoryGame{}
+			Expect(Minimax(game, "Max")).To(BeEquivalentTo(Result{Score: 0}))
+		})
+	})
 })
 
 type VictoryGame struct {
 	Winner string
 }
+
+func (game VictoryGame) FindWinner() string {
+	return game.Winner
+}
+
