@@ -15,8 +15,6 @@ func Minimax(game Game, player string) Result {
 	move := game.LegalMoves(player)[0]
 	nextResult := Minimax(move.Game, player)
 	return Result{Score: nextResult.Score, Space: move.ClaimedSpace}
-
-	//panic("No decision")
 }
 
 type Game interface {
