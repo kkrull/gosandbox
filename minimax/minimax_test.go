@@ -53,9 +53,76 @@ var _ = Describe("Minimax", func() {
 
 	Context("when there are multiple moves to consider", func() {
 		Context("when it is the maximizing player's turn", func() {
-			It("picks the space that leads to immediate victory for the maximizing player", func() {
-				//TODO - set up a board with a useless space and a winning space, so Minimax has to loop over Game#LegalMoves
+			FIt("picks the space that leads to immediate victory for the maximizing player", func() {
+				game := newMultiSpaceGame()
+				Expect(Minimax(game, "Max")).To(BeEquivalentTo(Result{
+					Space: "Victory",
+					Score: 1,
+				}))
 			})
 		})
 	})
 })
+
+func newMultiSpaceGame() multiSpaceGame {
+	return multiSpaceGame{
+		spaces: []string{"Useless", "Victory"},
+		owners: make([]string, 2),
+	}
+}
+
+type multiSpaceGame struct {
+	spaces []string
+	owners []string
+}
+
+func (game multiSpaceGame) HasWinner() bool {
+	return game.FindWinner() != ""
+}
+
+func (game multiSpaceGame) FindWinner() string {
+	return game.owners[1]
+}
+
+func (game multiSpaceGame) IsOver() bool {
+	if game.HasWinner() {
+		return true
+	}
+
+	return len(game.AvailableSpaces()) == 0
+}
+
+func (game multiSpaceGame) AvailableSpaces() []string {
+	openSpaces := make([]string, 0)
+	for i, owner := range game.owners {
+		if owner == "" {
+			openSpaces = append(openSpaces, game.spaces[i])
+		}
+	}
+
+	return openSpaces
+}
+
+func (game multiSpaceGame) LegalMoves(player string) []Move {
+	if game.owners[1] != "" {
+		return []Move{}
+	}
+
+	open := make([]Move, 0)
+	for i, owner := range game.owners {
+		if owner == "" {
+			nextOwners := make([]string, len(game.owners))
+			copy(nextOwners, game.owners)
+			nextOwners[i] = player
+
+			move := Move{
+				ClaimedSpace: game.spaces[i],
+				Game: multiSpaceGame{
+					spaces: game.spaces,
+					owners: nextOwners}}
+			open = append(open, move)
+		}
+	}
+
+	return open
+}

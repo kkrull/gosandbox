@@ -13,7 +13,7 @@ func Minimax(game Game, player string) Result {
 	}
 
 	move := game.LegalMoves(player)[0]
-	nextResult := Minimax(move.Game, player)
+	nextResult := Minimax(move.Game, "Min")
 	return Result{Score: nextResult.Score, Space: move.ClaimedSpace}
 }
 
