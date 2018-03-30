@@ -62,6 +62,8 @@ var _ = Describe("Minimax", func() {
 			})
 		})
 	})
+
+	XIt("Switches players")
 })
 
 func newMultiSpaceGame() multiSpaceGame {
