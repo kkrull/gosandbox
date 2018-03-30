@@ -53,7 +53,7 @@ var _ = Describe("Minimax", func() {
 
 	Context("when there are multiple moves to consider", func() {
 		Context("when it is the maximizing player's turn", func() {
-			FIt("picks the space that leads to immediate victory for the maximizing player", func() {
+			It("picks the space that leads to immediate victory for the maximizing player", func() {
 				game := newMultiSpaceGame()
 				Expect(Minimax(game, "Max")).To(BeEquivalentTo(Result{
 					Space: "Victory",
