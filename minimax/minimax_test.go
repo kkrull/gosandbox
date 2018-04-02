@@ -12,4 +12,8 @@ var _ = Describe("Minimax", func() {
 		Expect(42).To(Equal(42))
 		Minimax()
 	})
+
+	It("returns a result", func() {
+		Expect(Minimax()).To(BeAssignableToTypeOf(Result{}))
+	})
 })

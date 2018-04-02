@@ -1,5 +1,9 @@
 package minimax
 
-func Minimax() {
+func Minimax() Result {
+	return Result{}
+}
+
+type Result struct {
 
 }
