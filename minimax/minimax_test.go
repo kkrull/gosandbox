@@ -79,11 +79,6 @@ type FakeGame struct {
 	Winner Player
 }
 
-type Outcome struct {
-	Move     Move
-	NextGame Game
-}
-
 func (game *FakeGame) AddAvailableMove(move Move, nextGame Game) {
 	if game.Moves == nil {
 		game.Moves = make([]Outcome, 0)
@@ -92,13 +87,10 @@ func (game *FakeGame) AddAvailableMove(move Move, nextGame Game) {
 	game.Moves = append(game.Moves, Outcome{Move: move, NextGame: nextGame})
 }
 
-func (game FakeGame) AvailableMoves() []Move {
-	moves := make([]Move, len(game.Moves))
-	for i, move := range game.Moves {
-		moves[i] = move.Move
-	}
-
-	return moves
+func (game FakeGame) AvailableMoves() []Outcome {
+	outcomes := make([]Outcome, len(game.Moves))
+	copy(outcomes, game.Moves)
+	return outcomes
 }
 
 func (game FakeGame) FindWinner() Player {

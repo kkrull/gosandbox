@@ -9,15 +9,30 @@ func Minimax(game Game) Result {
 		return Result{Score: 0}
 	}
 
-	return Result{Move: game.AvailableMoves()[0]}
+	bestResult := Result{Score: -100}
+	for _, outcome := range game.AvailableMoves() {
+		nextResult := Minimax(outcome.NextGame)
+		if nextResult.Score > bestResult.Score {
+			bestResult = Result{
+				Score: nextResult.Score,
+				Move:  outcome.Move}
+		}
+	}
+
+	return bestResult
 }
 
 type Game interface {
-	AvailableMoves() []Move
+	AvailableMoves() []Outcome
 	FindWinner() Player
 	IsOver() bool
 	MaximizingPlayer() Player
 	MinimizingPlayer() Player
+}
+
+type Outcome struct {
+	Move     Move
+	NextGame Game
 }
 
 type Move interface {
