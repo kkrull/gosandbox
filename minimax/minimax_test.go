@@ -13,7 +13,7 @@ var (
 )
 
 var _ = Describe("Minimax", func() {
-	It("returns a result", func() {
+	It("returns an outcome", func() {
 		game := FakeGame{Over: true}
 		Expect(Minimax(game)).To(BeAssignableToTypeOf(Outcome{}))
 	})
@@ -47,11 +47,11 @@ var _ = Describe("Minimax", func() {
 		It("picks a move", func() {
 			game := FakeGame{Over: false}
 
-			anyMove := FakeMove{Id: "any move"}
+			anyPlay := FakePlay{Id: "any play"}
 			drawGame := FakeGame{Over: true}
-			game.AddAvailableMove(anyMove, drawGame)
+			game.AddAvailableChoice(anyPlay, drawGame)
 
-			Expect(Minimax(game)).To(BeEquivalentTo(Outcome{Play: anyMove}))
+			Expect(Minimax(game)).To(BeEquivalentTo(Outcome{Play: anyPlay}))
 		})
 	})
 
@@ -59,37 +59,37 @@ var _ = Describe("Minimax", func() {
 		It("picks the move that makes the maximizing player win", func() {
 			game := FakeGame{Over: false}
 
-			moveToDraw := FakeMove{Id: "draw"}
+			playToDraw := FakePlay{Id: "draw"}
 			drawGame := FakeGame{Over: true}
-			game.AddAvailableMove(moveToDraw, drawGame)
+			game.AddAvailableChoice(playToDraw, drawGame)
 
-			moveToMaxWins := FakeMove{Id: "maxWins"}
+			playToMaxWins := FakePlay{Id: "maxWins"}
 			maxWins := FakeGame{
 				Over:   true,
 				Winner: maximizer}
-			game.AddAvailableMove(moveToMaxWins, maxWins)
-			Expect(Minimax(game)).To(BeEquivalentTo(Outcome{Play: moveToMaxWins, BoundedScore: 1}))
+			game.AddAvailableChoice(playToMaxWins, maxWins)
+			Expect(Minimax(game)).To(BeEquivalentTo(Outcome{Play: playToMaxWins, BoundedScore: 1}))
 		})
 	})
 })
 
 type FakeGame struct {
-	Moves  []Choice
-	Over   bool
-	Winner Player
+	Choices []Choice
+	Over    bool
+	Winner  Player
 }
 
-func (game *FakeGame) AddAvailableMove(move Play, nextGame Game) {
-	if game.Moves == nil {
-		game.Moves = make([]Choice, 0)
+func (game *FakeGame) AddAvailableChoice(play Play, resultingGame Game) {
+	if game.Choices == nil {
+		game.Choices = make([]Choice, 0)
 	}
 
-	game.Moves = append(game.Moves, Choice{Play: move, ResultingGame: nextGame})
+	game.Choices = append(game.Choices, Choice{Play: play, ResultingGame: resultingGame})
 }
 
 func (game FakeGame) AvailableChoices() []Choice {
-	outcomes := make([]Choice, len(game.Moves))
-	copy(outcomes, game.Moves)
+	outcomes := make([]Choice, len(game.Choices))
+	copy(outcomes, game.Choices)
 	return outcomes
 }
 
@@ -109,6 +109,6 @@ func (game FakeGame) MinimizingPlayer() Player {
 	return minimizer
 }
 
-type FakeMove struct {
+type FakePlay struct {
 	Id string
 }
