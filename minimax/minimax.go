@@ -1,48 +1,47 @@
 package minimax
 
-func Minimax(game Game) Result {
+func Minimax(game Game) Outcome {
 	if game.FindWinner() == game.MaximizingPlayer() {
-		return Result{Score: 1}
+		return Outcome{BoundedScore: 1}
 	} else if game.FindWinner() == game.MinimizingPlayer() {
-		return Result{Score: -1}
+		return Outcome{BoundedScore: -1}
 	} else if game.IsOver() {
-		return Result{Score: 0}
+		return Outcome{BoundedScore: 0}
 	}
 
-	bestResult := Result{Score: -100}
-	for _, outcome := range game.AvailableMoves() {
-		nextResult := Minimax(outcome.NextGame)
-		if nextResult.Score > bestResult.Score {
-			bestResult = Result{
-				Score: nextResult.Score,
-				Move:  outcome.Move}
+	bestOutcome := Outcome{BoundedScore: -100}
+	for _, choice := range game.AvailableChoices() {
+		outcome := Minimax(choice.ResultingGame)
+		if outcome.BoundedScore > bestOutcome.BoundedScore {
+			bestOutcome = Outcome{
+				BoundedScore: outcome.BoundedScore,
+				Play:         choice.Play}
 		}
 	}
 
-	return bestResult
+	return bestOutcome
 }
 
 type Game interface {
-	AvailableMoves() []Outcome
+	AvailableChoices() []Choice
 	FindWinner() Player
 	IsOver() bool
 	MaximizingPlayer() Player
 	MinimizingPlayer() Player
 }
 
-type Outcome struct {
-	Move     Move
-	NextGame Game
-}
-
-type Move interface {
+type Choice struct {
+	Play          Play
+	ResultingGame Game
 }
 
 type Player struct {
 	Name string
 }
 
-type Result struct {
-	Move  Move
-	Score int
+type Outcome struct {
+	Play         Play
+	BoundedScore int
 }
+
+type Play interface{}

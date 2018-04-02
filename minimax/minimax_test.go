@@ -15,7 +15,7 @@ var (
 var _ = Describe("Minimax", func() {
 	It("returns a result", func() {
 		game := FakeGame{Over: true}
-		Expect(Minimax(game)).To(BeAssignableToTypeOf(Result{}))
+		Expect(Minimax(game)).To(BeAssignableToTypeOf(Outcome{}))
 	})
 
 	Context("given a game that the maximizing player has won", func() {
@@ -23,7 +23,7 @@ var _ = Describe("Minimax", func() {
 			game := FakeGame{
 				Over:   true,
 				Winner: maximizer}
-			Expect(Minimax(game)).To(BeEquivalentTo(Result{Score: 1}))
+			Expect(Minimax(game)).To(BeEquivalentTo(Outcome{BoundedScore: 1}))
 		})
 	})
 
@@ -32,14 +32,14 @@ var _ = Describe("Minimax", func() {
 			game := FakeGame{
 				Over:   true,
 				Winner: minimizer}
-			Expect(Minimax(game)).To(BeEquivalentTo(Result{Score: -1}))
+			Expect(Minimax(game)).To(BeEquivalentTo(Outcome{BoundedScore: -1}))
 		})
 	})
 
 	Context("given a game that has ended in a draw", func() {
 		It("scores it as 0", func() {
 			game := FakeGame{Over: true}
-			Expect(Minimax(game)).To(BeEquivalentTo(Result{Score: 0}))
+			Expect(Minimax(game)).To(BeEquivalentTo(Outcome{BoundedScore: 0}))
 		})
 	})
 
@@ -51,7 +51,7 @@ var _ = Describe("Minimax", func() {
 			drawGame := FakeGame{Over: true}
 			game.AddAvailableMove(anyMove, drawGame)
 
-			Expect(Minimax(game)).To(BeEquivalentTo(Result{Move: anyMove}))
+			Expect(Minimax(game)).To(BeEquivalentTo(Outcome{Play: anyMove}))
 		})
 	})
 
@@ -68,27 +68,27 @@ var _ = Describe("Minimax", func() {
 				Over:   true,
 				Winner: maximizer}
 			game.AddAvailableMove(moveToMaxWins, maxWins)
-			Expect(Minimax(game)).To(BeEquivalentTo(Result{Move: moveToMaxWins, Score: 1}))
+			Expect(Minimax(game)).To(BeEquivalentTo(Outcome{Play: moveToMaxWins, BoundedScore: 1}))
 		})
 	})
 })
 
 type FakeGame struct {
-	Moves  []Outcome
+	Moves  []Choice
 	Over   bool
 	Winner Player
 }
 
-func (game *FakeGame) AddAvailableMove(move Move, nextGame Game) {
+func (game *FakeGame) AddAvailableMove(move Play, nextGame Game) {
 	if game.Moves == nil {
-		game.Moves = make([]Outcome, 0)
+		game.Moves = make([]Choice, 0)
 	}
 
-	game.Moves = append(game.Moves, Outcome{Move: move, NextGame: nextGame})
+	game.Moves = append(game.Moves, Choice{Play: move, ResultingGame: nextGame})
 }
 
-func (game FakeGame) AvailableMoves() []Outcome {
-	outcomes := make([]Outcome, len(game.Moves))
+func (game FakeGame) AvailableChoices() []Choice {
+	outcomes := make([]Choice, len(game.Moves))
 	copy(outcomes, game.Moves)
 	return outcomes
 }
