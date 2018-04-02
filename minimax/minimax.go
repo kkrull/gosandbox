@@ -19,10 +19,14 @@ type Game interface {
 	MinimizingPlayer() Player
 }
 
+type Move interface {
+}
+
 type Player struct {
 	Name string
 }
 
 type Result struct {
+	Move Move
 	Score int
 }
