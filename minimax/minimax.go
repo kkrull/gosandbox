@@ -11,13 +11,7 @@ func Minimax(game Game, player Player) Outcome {
 		return Outcome{BoundedScore: 0}
 	}
 
-	var opponent Player
-	if player == game.MaximizingPlayer() {
-		opponent = game.MinimizingPlayer()
-	} else {
-		opponent = game.MaximizingPlayer()
-	}
-
+	opponent := opponentOf(player, game)
 	if player == game.MaximizingPlayer() {
 		bestOutcome := Outcome{BoundedScore: -100}
 		for _, choice := range game.AvailableChoices() {
@@ -44,6 +38,14 @@ func Minimax(game Game, player Player) Outcome {
 		return bestOutcome
 	} else {
 		panic(fmt.Sprintf("unknown player: %s", player.Name))
+	}
+}
+
+func opponentOf(player Player, game Game) Player {
+	if player == game.MaximizingPlayer() {
+		return game.MinimizingPlayer()
+	} else {
+		return game.MaximizingPlayer()
 	}
 }
 
