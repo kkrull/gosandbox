@@ -52,8 +52,7 @@ var _ = Describe("Minimax", func() {
 			Expect(Minimax(game)).To(BeEquivalentTo(Result{Move: availableMove}))
 		})
 
-		XIt("picks move that ends the game", func() {
-		})
+		XIt("picks move that ends the game", func() {})
 	})
 })
 

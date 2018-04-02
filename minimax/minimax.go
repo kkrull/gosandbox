@@ -27,6 +27,6 @@ type Player struct {
 }
 
 type Result struct {
-	Move Move
+	Move  Move
 	Score int
 }
