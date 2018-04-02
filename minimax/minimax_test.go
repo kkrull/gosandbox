@@ -12,8 +12,15 @@ var _ = Describe("Minimax", func() {
 		game := FakeGame{}
 		Expect(Minimax(game)).To(BeAssignableToTypeOf(Result{}))
 	})
+
+	Context("given a game that the maximizing player has won", func() {
+		It("scores it as +1", func() {
+			game := FakeGame{Winner: "Max"}
+			Expect(Minimax(game)).To(BeEquivalentTo(Result{Score: 1}))
+		})
+	})
 })
 
 type FakeGame struct {
-
+	Winner string
 }
