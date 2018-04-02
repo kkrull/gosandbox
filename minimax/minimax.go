@@ -9,10 +9,11 @@ func Minimax(game Game) Result {
 		return Result{Score: 0}
 	}
 
-	panic("no result")
+	return Result{Move: game.AvailableMoves()[0]}
 }
 
 type Game interface {
+	AvailableMoves() []Move
 	FindWinner() Player
 	IsOver() bool
 	MaximizingPlayer() Player

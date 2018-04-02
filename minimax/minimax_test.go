@@ -52,7 +52,8 @@ var _ = Describe("Minimax", func() {
 			Expect(Minimax(game)).To(BeEquivalentTo(Result{Move: availableMove}))
 		})
 
-		XIt("picks move that ends the game", func() {})
+		XIt("picks move that ends the game", func() {
+		})
 	})
 })
 
@@ -60,6 +61,10 @@ type FakeGame struct {
 	Over     bool
 	Winner   Player
 	NextMove Move
+}
+
+func (game FakeGame) AvailableMoves() []Move {
+	return []Move{game.NextMove}
 }
 
 func (game FakeGame) FindWinner() Player {
