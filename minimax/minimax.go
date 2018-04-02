@@ -1,6 +1,6 @@
 package minimax
 
-func Minimax(game Game) Outcome {
+func Minimax(game Game, player Player) Outcome {
 	if game.FindWinner() == game.MaximizingPlayer() {
 		return Outcome{BoundedScore: 1}
 	} else if game.FindWinner() == game.MinimizingPlayer() {
@@ -11,7 +11,7 @@ func Minimax(game Game) Outcome {
 
 	bestOutcome := Outcome{BoundedScore: -100}
 	for _, choice := range game.AvailableChoices() {
-		outcome := Minimax(choice.ResultingGame)
+		outcome := Minimax(choice.ResultingGame, Player{})
 		if outcome.BoundedScore > bestOutcome.BoundedScore {
 			bestOutcome = Outcome{
 				BoundedScore: outcome.BoundedScore,
