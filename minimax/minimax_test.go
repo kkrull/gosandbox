@@ -124,9 +124,14 @@ var _ = Describe("Minimax", func() {
 			rootGame.AddAvailableChoice(playToMinWinning, minWinning)
 		})
 
-		It("evaluates players in turn", func() {
+		It("evaluates players in turn, starting from the maximizing player", func() {
 			Expect(Minimax(rootGame, rootGame.MaximizingPlayer())).
 				To(BeEquivalentTo(Outcome{Play: playToMaxWinning}))
+		})
+
+		It("evaluates players in turn, starting from the minimizing player", func() {
+			Expect(Minimax(rootGame, rootGame.MinimizingPlayer())).
+				To(BeEquivalentTo(Outcome{Play: playToMinWinning}))
 		})
 	})
 })
