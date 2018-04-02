@@ -86,8 +86,38 @@ var _ = Describe("Minimax", func() {
 					Over:   true,
 					Winner: minimizer}
 				game.AddAvailableChoice(playToMaxLoses, maxLoses)
-				Expect(Minimax(game, game.MinimizingPlayer())).To(BeEquivalentTo(Outcome{Play: playToMaxLoses, BoundedScore: -1}))
+				Expect(Minimax(game, game.MinimizingPlayer())).
+					To(BeEquivalentTo(Outcome{Play: playToMaxLoses, BoundedScore: -1}))
 			})
+		})
+	})
+
+	Context("given a game where a player has to make 2 or more plays to win", func() {
+		It("evaluates players in turn", func() {
+			rootGame := FakeGame{Over: false}
+
+			playToMaxWinning := FakePlay{Id: "MaxWinning"}
+			maxWinning := FakeGame{Over: false}
+			maxWinning.AddAvailableChoice(
+				FakePlay{Id: "MaxChokes"},
+				FakeGame{Over: true})
+			maxWinning.AddAvailableChoice(
+				FakePlay{Id: "MaxWins"},
+				FakeGame{Over: false, Winner: maximizer})
+
+			playToMinWins := FakePlay{Id: "MinWinning"}
+			minWinning := FakeGame{Over: false}
+			minWinning.AddAvailableChoice(
+				FakePlay{Id: "MinChokes"},
+				FakeGame{Over: true})
+			minWinning.AddAvailableChoice(
+				FakePlay{Id: "MinWins"},
+				FakeGame{Over: false, Winner: minimizer})
+
+			rootGame.AddAvailableChoice(playToMaxWinning, maxWinning)
+			rootGame.AddAvailableChoice(playToMinWins, minWinning)
+			Expect(Minimax(rootGame, rootGame.MaximizingPlayer())).
+				To(BeEquivalentTo(Outcome{Play: playToMaxWinning}))
 		})
 	})
 })

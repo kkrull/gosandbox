@@ -11,11 +11,17 @@ func Minimax(game Game, player Player) Outcome {
 		return Outcome{BoundedScore: 0}
 	}
 
-	suspiciouslyAmbiguousOpponent := Player{}
+	var opponent Player
+	if player == game.MaximizingPlayer() {
+		opponent = game.MinimizingPlayer()
+	} else {
+		opponent = game.MaximizingPlayer()
+	}
+
 	if player == game.MaximizingPlayer() {
 		bestOutcome := Outcome{BoundedScore: -100}
 		for _, choice := range game.AvailableChoices() {
-			outcome := Minimax(choice.ResultingGame, suspiciouslyAmbiguousOpponent)
+			outcome := Minimax(choice.ResultingGame, opponent)
 			if outcome.BoundedScore > bestOutcome.BoundedScore {
 				bestOutcome = Outcome{
 					BoundedScore: outcome.BoundedScore,
@@ -27,7 +33,7 @@ func Minimax(game Game, player Player) Outcome {
 	} else if player == game.MinimizingPlayer() {
 		bestOutcome := Outcome{BoundedScore: 100}
 		for _, choice := range game.AvailableChoices() {
-			outcome := Minimax(choice.ResultingGame, suspiciouslyAmbiguousOpponent)
+			outcome := Minimax(choice.ResultingGame, opponent)
 			if outcome.BoundedScore < bestOutcome.BoundedScore {
 				bestOutcome = Outcome{
 					BoundedScore: outcome.BoundedScore,
