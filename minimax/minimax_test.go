@@ -45,26 +45,60 @@ var _ = Describe("Minimax", func() {
 
 	Context("given a game that is not over yet", func() {
 		It("picks a move", func() {
-			availableMove := FakeMove{Id: "maxWins"}
-			game := FakeGame{
-				NextMove: availableMove,
-				Over:     false}
-			Expect(Minimax(game)).To(BeEquivalentTo(Result{Move: availableMove}))
-		})
+			game := FakeGame{Over: false}
 
-		XIt("picks move that ends the game", func() {
+			anyMove := FakeMove{Id: "any move"}
+			drawGame := FakeGame{Over: true}
+			game.AddAvailableMove(anyMove, drawGame)
+
+			Expect(Minimax(game)).To(BeEquivalentTo(Result{Move: anyMove}))
+		})
+	})
+
+	Context("given a game that can be won with 1 more move", func() {
+		It("picks the move that makes the maximizing player win", func() {
+			game := FakeGame{Over: false}
+
+			moveToDraw := FakeMove{Id: "draw"}
+			drawGame := FakeGame{Over: true}
+			game.AddAvailableMove(moveToDraw, drawGame)
+
+			moveToMaxWins := FakeMove{Id: "maxWins"}
+			maxWins := FakeGame{
+				Over:   true,
+				Winner: maximizer}
+			game.AddAvailableMove(moveToMaxWins, maxWins)
+			Expect(Minimax(game)).To(BeEquivalentTo(Result{Move: moveToMaxWins, Score: 1}))
 		})
 	})
 })
 
 type FakeGame struct {
-	Over     bool
-	Winner   Player
-	NextMove Move
+	Moves  []Outcome
+	Over   bool
+	Winner Player
+}
+
+type Outcome struct {
+	Move     Move
+	NextGame Game
+}
+
+func (game *FakeGame) AddAvailableMove(move Move, nextGame Game) {
+	if game.Moves == nil {
+		game.Moves = make([]Outcome, 0)
+	}
+
+	game.Moves = append(game.Moves, Outcome{Move: move, NextGame: nextGame})
 }
 
 func (game FakeGame) AvailableMoves() []Move {
-	return []Move{game.NextMove}
+	moves := make([]Move, len(game.Moves))
+	for i, move := range game.Moves {
+		moves[i] = move.Move
+	}
+
+	return moves
 }
 
 func (game FakeGame) FindWinner() Player {
