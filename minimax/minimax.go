@@ -1,7 +1,5 @@
 package minimax
 
-import "fmt"
-
 func Minimax(game Game, player Player) Outcome {
 	if game.FindWinner() == game.MaximizingPlayer() {
 		return Outcome{BoundedScore: 1}
@@ -24,7 +22,7 @@ func Minimax(game Game, player Player) Outcome {
 		}
 
 		return bestOutcome
-	} else if player == game.MinimizingPlayer() {
+	} else {
 		bestOutcome := Outcome{BoundedScore: 100}
 		for _, choice := range game.AvailableChoices() {
 			outcome := Minimax(choice.ResultingGame, opponent)
@@ -36,8 +34,6 @@ func Minimax(game Game, player Player) Outcome {
 		}
 
 		return bestOutcome
-	} else {
-		panic(fmt.Sprintf("unknown player: %s", player.Name))
 	}
 }
 
