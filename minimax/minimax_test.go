@@ -44,3 +44,7 @@ func (game FakeGame) FindWinner() Player {
 func (game FakeGame) MaximizingPlayer() Player {
 	return maximizer
 }
+
+func (game FakeGame) MinimizingPlayer() Player {
+	return minimizer
+}
