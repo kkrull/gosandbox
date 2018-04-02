@@ -5,12 +5,16 @@ func Minimax(game Game) Result {
 		return Result{Score: 1}
 	} else if game.FindWinner() == game.MinimizingPlayer() {
 		return Result{Score: -1}
+	} else if game.IsOver() {
+		return Result{Score: 0}
 	}
-	return Result{}
+
+	panic("no result")
 }
 
 type Game interface {
 	FindWinner() Player
+	IsOver() bool
 	MaximizingPlayer() Player
 	MinimizingPlayer() Player
 }
