@@ -1,10 +1,19 @@
 package minimax
 
 func Minimax(game Game) Result {
-	return Result{Score: 1}
+	if game.FindWinner() == game.MaximizingPlayer() {
+		return Result{Score: 1}
+	}
+	return Result{}
 }
 
 type Game interface {
+	FindWinner() Player
+	MaximizingPlayer() Player
+}
+
+type Player struct {
+	Name string
 }
 
 type Result struct {
