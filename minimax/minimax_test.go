@@ -38,13 +38,14 @@ var _ = Describe("Negamax", func() {
 		Expect(score).To(Equal(0))
 	})
 
-	It("evaluates a successor game", func() {
+	It("scores a game that is not over", func() {
 		game := FakeGame{successors: []Game{
 			FakeGame{isOver: true, winner: max},
 		}}
 
 		score := Negamax(game, max)
-		Expect(score).To(Equal(1))
+		Expect(score).To(BeNumerically(">=", -1))
+		Expect(score).To(BeNumerically("<=", 1))
 	})
 })
 
