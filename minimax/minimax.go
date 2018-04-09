@@ -1,7 +1,7 @@
 package minimax
 
 func Negamax(game Game, player Player) int {
-	return 0
+	return 1
 }
 
 type Game interface {

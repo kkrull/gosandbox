@@ -18,7 +18,15 @@ var _ = Describe("Negamax", func() {
 		Expect(score).To(BeNumerically(">=", -1))
 		Expect(score).To(BeNumerically("<=", 1))
 	})
+
+	It("returns +1 for a game won by the maximizing player", func() {
+		game := FakeGame{Winner: max}
+		score := Negamax(game, max)
+		Expect(score).To(Equal(1))
+	})
 })
 
 type FakeGame struct {
+	Winner Player
 }
+
