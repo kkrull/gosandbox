@@ -9,9 +9,15 @@ func Negamax(game Game, player Player) int {
 		return 0
 	}
 
-	successor := game.Successors()[0]
-	score := Negamax(successor, player)
-	return score
+	maxScore := -100
+	for _, successor := range game.Successors() {
+		score := Negamax(successor, player)
+		if score > maxScore {
+			maxScore = score
+		}
+	}
+
+	return maxScore
 }
 
 type Game interface {
