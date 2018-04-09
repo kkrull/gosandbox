@@ -7,11 +7,14 @@ import (
 	. "github.com/kkrull/gosandbox/minimax"
 )
 
+var (
+	max = Player{Name: "Max"}
+)
+
 var _ = Describe("Negamax", func() {
 	It("scores a game state for a player", func() {
 		game := FakeGame{}
-		player := Player{Name: "Max"}
-		score := Negamax(game, player)
+		score := Negamax(game, max)
 		Expect(score).To(BeNumerically(">=", -1))
 		Expect(score).To(BeNumerically("<=", 1))
 	})
