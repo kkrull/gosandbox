@@ -58,14 +58,14 @@ var _ = Describe("Negamax", func() {
 		Expect(score).To(Equal(1))
 	})
 
-	It("minimizes the score when it is the minimizing player's turn", func() {
+	It("maximizes the minimum score achieved by the opponent, when it is the minimizing player's turn", func() {
 		game := FakeGame{successors: []Game{
-			FakeGame{isOver: true, winner: max},
-			FakeGame{isOver: true, winner: min},
+			FakeGame{isOver: true, winner: max}, //-1
+			FakeGame{isOver: true, winner: min}, //+1
 		}}
 
 		score := Negamax(game, min)
-		Expect(score).To(Equal(-1))
+		Expect(score).To(Equal(1))
 	})
 })
 
