@@ -48,6 +48,10 @@ func (game FakeGame) FindWinner() Player {
 	return game.Winner
 }
 
+func (game FakeGame) IsOver() bool {
+	return game.Over
+}
+
 func (FakeGame) MaximizingPlayer() Player {
 	return max
 }
