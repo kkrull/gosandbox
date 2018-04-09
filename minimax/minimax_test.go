@@ -14,26 +14,33 @@ var (
 
 var _ = Describe("Negamax", func() {
 	It("scores a game state for a player", func() {
-		game := FakeGame{}
+		game := FakeGame{Over: true}
 		score := Negamax(game, max)
 		Expect(score).To(BeNumerically(">=", -1))
 		Expect(score).To(BeNumerically("<=", 1))
 	})
 
 	It("returns +1 for a game won by the maximizing player", func() {
-		game := FakeGame{Winner: max}
+		game := FakeGame{Over: true, Winner: max}
 		score := Negamax(game, max)
 		Expect(score).To(Equal(1))
 	})
 
 	It("returns -1 for a game won by the minimizing player", func() {
-		game := FakeGame{Winner: min}
+		game := FakeGame{Over: true, Winner: min}
 		score := Negamax(game, max)
 		Expect(score).To(Equal(-1))
+	})
+
+	It("returns 0 for a game ending in a draw", func() {
+		game := FakeGame{Over: true}
+		score := Negamax(game, max)
+		Expect(score).To(Equal(0))
 	})
 })
 
 type FakeGame struct {
+	Over bool
 	Winner Player
 }
 
@@ -43,4 +50,8 @@ func (game FakeGame) FindWinner() Player {
 
 func (FakeGame) MaximizingPlayer() Player {
 	return max
+}
+
+func (FakeGame) MinimizingPlayer() Player {
+	return min
 }
