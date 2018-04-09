@@ -14,42 +14,52 @@ var (
 
 var _ = Describe("Negamax", func() {
 	It("scores a game state for a player", func() {
-		game := FakeGame{Over: true}
+		game := FakeGame{isOver: true}
 		score := Negamax(game, max)
 		Expect(score).To(BeNumerically(">=", -1))
 		Expect(score).To(BeNumerically("<=", 1))
 	})
 
 	It("returns +1 for a game won by the maximizing player", func() {
-		game := FakeGame{Over: true, Winner: max}
+		game := FakeGame{isOver: true, winner: max}
 		score := Negamax(game, max)
 		Expect(score).To(Equal(1))
 	})
 
 	It("returns -1 for a game won by the minimizing player", func() {
-		game := FakeGame{Over: true, Winner: min}
+		game := FakeGame{isOver: true, winner: min}
 		score := Negamax(game, max)
 		Expect(score).To(Equal(-1))
 	})
 
 	It("returns 0 for a game ending in a draw", func() {
-		game := FakeGame{Over: true}
+		game := FakeGame{isOver: true}
 		score := Negamax(game, max)
 		Expect(score).To(Equal(0))
+	})
+
+	It("evaluates a successor game", func() {
+		game := FakeGame{successors: []Game{
+			FakeGame{isOver: true, winner: max},
+		}}
+
+		score := Negamax(game, max)
+		Expect(score).To(Equal(1))
 	})
 })
 
 type FakeGame struct {
-	Over bool
-	Winner Player
+	isOver     bool
+	winner     Player
+	successors []Game
 }
 
 func (game FakeGame) FindWinner() Player {
-	return game.Winner
+	return game.winner
 }
 
 func (game FakeGame) IsOver() bool {
-	return game.Over
+	return game.isOver
 }
 
 func (FakeGame) MaximizingPlayer() Player {
@@ -58,4 +68,8 @@ func (FakeGame) MaximizingPlayer() Player {
 
 func (FakeGame) MinimizingPlayer() Player {
 	return min
+}
+
+func (game FakeGame) Successors() []Game {
+	return game.successors
 }

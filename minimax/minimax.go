@@ -9,7 +9,9 @@ func Negamax(game Game, player Player) int {
 		return 0
 	}
 
-	panic("no score")
+	successor := game.Successors()[0]
+	score := Negamax(successor, player)
+	return score
 }
 
 type Game interface {
@@ -17,6 +19,7 @@ type Game interface {
 	IsOver() bool
 	MaximizingPlayer() Player
 	MinimizingPlayer() Player
+	Successors() []Game
 }
 
 type Player struct {
