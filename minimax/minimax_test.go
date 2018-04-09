@@ -9,6 +9,7 @@ import (
 
 var (
 	max = Player{Name: "Max"}
+	min = Player{Name: "Min"}
 )
 
 var _ = Describe("Negamax", func() {
@@ -24,9 +25,22 @@ var _ = Describe("Negamax", func() {
 		score := Negamax(game, max)
 		Expect(score).To(Equal(1))
 	})
+
+	It("returns -1 for a game won by the minimizing player", func() {
+		game := FakeGame{Winner: min}
+		score := Negamax(game, max)
+		Expect(score).To(Equal(-1))
+	})
 })
 
 type FakeGame struct {
 	Winner Player
 }
 
+func (game FakeGame) FindWinner() Player {
+	return game.Winner
+}
+
+func (FakeGame) MaximizingPlayer() Player {
+	return max
+}
