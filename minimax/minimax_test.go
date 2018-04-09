@@ -9,8 +9,12 @@ import (
 
 var _ = Describe("Negamax", func() {
 	It("scores a game state", func() {
-		score := Negamax()
+		game := FakeGame{}
+		score := Negamax(game)
 		Expect(score).To(BeNumerically(">=", -1))
 		Expect(score).To(BeNumerically("<=", 1))
 	})
 })
+
+type FakeGame struct {
+}
