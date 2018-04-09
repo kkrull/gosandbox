@@ -8,9 +8,10 @@ import (
 )
 
 var _ = Describe("Negamax", func() {
-	It("scores a game state", func() {
+	It("scores a game state for a player", func() {
 		game := FakeGame{}
-		score := Negamax(game)
+		player := Player{Name: "Max"}
+		score := Negamax(game, player)
 		Expect(score).To(BeNumerically(">=", -1))
 		Expect(score).To(BeNumerically("<=", 1))
 	})
