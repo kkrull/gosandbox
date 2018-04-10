@@ -12,11 +12,9 @@ var (
 )
 
 var _ = Describe("Minimax", func() {
-	It("returns a score", func() {
+	It("scores a game ending in a draw as 0", func() {
 		game := FakeGame{isOver: true}
-		score := Minimax(game, max)
-		Expect(score).To(BeNumerically(">=", -1))
-		Expect(score).To(BeNumerically("<=", 1))
+		Expect(Minimax(game, max)).To(Equal(0))
 	})
 })
 
