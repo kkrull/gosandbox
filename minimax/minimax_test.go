@@ -38,12 +38,20 @@ var _ = Describe("Negamax", func() {
 		Expect(Negamax(game, min)).To(Equal(1))
 	})
 
-	It("evaluates the maximum score the maximizing player can get, if the minimizing player tries to win", func() {
+	FIt("evaluates the maximum score the maximizing player can get, if the minimizing player tries to win", func() {
 		game := FakeGame{isOver: false, next: []Game{
 			FakeGame{isOver: true},
 			FakeGame{isOver: true, winner: max},
 		}}
 		Expect(Negamax(game, max)).To(Equal(0))
+	})
+
+	It("evaluates the maximum score the maximizing player can get, if the minimizing player tries to win", func() {
+		game := FakeGame{isOver: false, next: []Game{
+			FakeGame{isOver: true},
+			FakeGame{isOver: true, winner: min},
+		}}
+		Expect(Negamax(game, max)).To(Equal(-1))
 	})
 })
 

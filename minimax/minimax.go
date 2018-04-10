@@ -1,5 +1,7 @@
 package minimax
 
+import "fmt"
+
 func Negamax(game Game, player Player) int {
 	if game.FindWinner() == game.MaximizingPlayer() {
 		return 1 * player.Polarity
@@ -11,15 +13,24 @@ func Negamax(game Game, player Player) int {
 
 	maxScorePossible := -100
 	for _, nextGame := range game.NextGames() {
-		opponent := player
-		nextScore := -Negamax(nextGame, opponent)
-		//fmt.Printf("Next score from %s: %d\n", opponent.Name, nextScore)
+		opponent := opponentOf(player, game)
+		nextScoreFromOpponentPerspective := Negamax(nextGame, opponent)
+		nextScore := -1 * nextScoreFromOpponentPerspective
+		fmt.Printf("Next score: (%s: %d) // (%s: %d)\n", player.Name, nextScore, opponent.Name, nextScoreFromOpponentPerspective)
 		if nextScore > maxScorePossible {
 			maxScorePossible = nextScore
 		}
 	}
 
 	return maxScorePossible
+}
+
+func opponentOf(player Player, game Game) Player {
+	if player == game.MaximizingPlayer() {
+		return game.MinimizingPlayer()
+	} else {
+		return game.MaximizingPlayer()
+	}
 }
 
 type Game interface {
