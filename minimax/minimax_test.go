@@ -68,3 +68,7 @@ func (game FakeGame) MaximizingPlayer() Player {
 func (game FakeGame) MinimizingPlayer() Player {
 	return min
 }
+
+func (game FakeGame) NextGames() []Game {
+	return game.next
+}
