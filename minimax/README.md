@@ -22,3 +22,10 @@ $ ginkgo bootstrap
 $ ginkgo generate minimax
 ```
 
+
+## Thoughts
+
+- Negamax is a lot faster
+- I'm getting mixed up on the sign flipping
+- The last test felt bit too large of a step, because I had to flip the terminal scores and the result of the Negamax
+
