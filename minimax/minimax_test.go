@@ -8,8 +8,8 @@ import (
 )
 
 var (
-	max = Player{Name: "max"}
-	min = Player{Name: "min"}
+	max = Player{Name: "max", Polarity: 1}
+	min = Player{Name: "min", Polarity: -1}
 )
 
 var _ = Describe("Minimax", func() {
@@ -26,6 +26,11 @@ var _ = Describe("Minimax", func() {
 	It("scores a game won by the minimizing player as -1", func() {
 		game := FakeGame{isOver: true, winner: min}
 		Expect(Minimax(game, max)).To(Equal(-1))
+	})
+
+	It("scores a game won by the maximizing player as -1, from the minimizing player's perspective", func() {
+		game := FakeGame{isOver: true, winner: max}
+		Expect(Minimax(game, min)).To(Equal(-1))
 	})
 })
 
