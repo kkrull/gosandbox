@@ -1,7 +1,11 @@
 package minimax
 
-func Minimax(player Player) int {
+func Minimax(game Game, player Player) int {
 	return 1
+}
+
+type Game interface {
+
 }
 
 type Player struct {

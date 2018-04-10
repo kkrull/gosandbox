@@ -13,8 +13,13 @@ var (
 
 var _ = Describe("Minimax", func() {
 	It("returns a score", func() {
-		score := Minimax(max)
+		game := FakeGame{isOver: true}
+		score := Minimax(game, max)
 		Expect(score).To(BeNumerically(">=", -1))
 		Expect(score).To(BeNumerically("<=", 1))
 	})
 })
+
+type FakeGame struct {
+	isOver bool
+}
