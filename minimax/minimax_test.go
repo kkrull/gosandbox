@@ -37,11 +37,20 @@ var _ = Describe("Negamax", func() {
 		game := FakeGame{isOver: true, winner: min}
 		Expect(Negamax(game, min)).To(Equal(1))
 	})
+
+	XIt("evaluates the maximum score the maximizing player can get, if the minimizing player tries to win", func() {
+		game := FakeGame{isOver: false, next: []Game{
+			FakeGame{isOver: true},
+			FakeGame{isOver: true, winner: max},
+		}}
+		Expect(Negamax(game, max)).To(Equal(0))
+	})
 })
 
 type FakeGame struct {
 	isOver bool
 	winner Player
+	next []Game
 }
 
 func (game FakeGame) FindWinner() Player {
