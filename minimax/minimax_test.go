@@ -7,9 +7,14 @@ import (
 	. "github.com/kkrull/gosandbox/minimax"
 )
 
+var (
+	max = Player{Name: "max"}
+)
+
 var _ = Describe("Minimax", func() {
 	It("returns a score", func() {
-		Expect(Minimax()).To(BeNumerically(">=", -1))
-		Expect(Minimax()).To(BeNumerically("<=", 1))
+		score := Minimax(max)
+		Expect(score).To(BeNumerically(">=", -1))
+		Expect(score).To(BeNumerically("<=", 1))
 	})
 })

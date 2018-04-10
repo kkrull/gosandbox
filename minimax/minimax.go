@@ -1,6 +1,9 @@
 package minimax
 
-func Minimax() int {
+func Minimax(player Player) int {
 	return 1
 }
 
+type Player struct {
+	Name string
+}
