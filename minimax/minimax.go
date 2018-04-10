@@ -4,7 +4,7 @@ func Negamax(game Game, player Player) int {
 	if game.FindWinner() == game.MaximizingPlayer() {
 		return 1 * player.Polarity
 	} else if game.FindWinner() == game.MinimizingPlayer() {
-		return -1
+		return -1 * player.Polarity
 	}
 
 	return 0

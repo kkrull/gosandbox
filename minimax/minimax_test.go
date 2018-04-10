@@ -32,6 +32,11 @@ var _ = Describe("Negamax", func() {
 		game := FakeGame{isOver: true, winner: max}
 		Expect(Negamax(game, min)).To(Equal(-1))
 	})
+
+	It("scores a game won by the minimizing player as +1, from the minimizing player's perspective", func() {
+		game := FakeGame{isOver: true, winner: min}
+		Expect(Negamax(game, min)).To(Equal(1))
+	})
 })
 
 type FakeGame struct {
