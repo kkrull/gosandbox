@@ -9,5 +9,5 @@ import (
 
 func TestMinimax(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Minimax Suite")
+	RunSpecs(t, "Negamax Suite")
 }

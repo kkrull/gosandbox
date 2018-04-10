@@ -1,6 +1,6 @@
 package minimax
 
-func Minimax(game Game, player Player) int {
+func Negamax(game Game, player Player) int {
 	if game.FindWinner() == game.MaximizingPlayer() {
 		return 1 * player.Polarity
 	} else if game.FindWinner() == game.MinimizingPlayer() {
