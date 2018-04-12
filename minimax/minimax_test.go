@@ -27,11 +27,19 @@ var _ = Describe("Minimax", func() {
 		game := FakeGame{over: true, winner: min}
 		Expect(Minimax(game, max)).To(Equal(-1))
 	})
+
+	It("picks the maximum score the maximizing player can achieve, assuming the minimizing player picks the move with the lowest score", func() {
+		game := FakeGame{nextGames: []FakeGame{
+			{over: true},
+			{over: true, winner: min}}}
+		Expect(Minimax(game, max)).To(Equal(-1))
+	})
 })
 
 type FakeGame struct {
-	over bool
-	winner Player
+	nextGames []FakeGame
+	over      bool
+	winner    Player
 }
 
 func (game FakeGame) FindWinner() Player {
