@@ -1,19 +1,24 @@
 package minimax
 
 func Minimax(game Game, player Player) int {
+	return Negamax(game, 1)
+}
+
+func Negamax(game Game, polarity int) int {
 	if game.FindWinner() == game.MaximizingPlayer() {
-		return 1
+		return polarity * 1
 	} else if game.FindWinner() == game.MinimizingPlayer() {
-		return -1
+		return polarity * -1
 	} else if game.IsOver() {
 		return 0
 	}
 
-	bestScore := 100
+	bestScore := -100
 	for _, nextGame := range game.NextGames() {
-		nextScore := Minimax(nextGame, Player{})
-		if nextScore < bestScore {
-			bestScore = nextScore
+		nextScoreFromOpponentPerspective := Negamax(nextGame, -1 * polarity)
+		nextScoreFromMyPerspective := -nextScoreFromOpponentPerspective
+		if nextScoreFromMyPerspective > bestScore {
+			bestScore = nextScoreFromMyPerspective
 		}
 	}
 

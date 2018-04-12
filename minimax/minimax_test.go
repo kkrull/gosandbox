@@ -32,7 +32,7 @@ var _ = Describe("Minimax", func() {
 		game := FakeGame{nextGames: []Game{
 			FakeGame{over: true},
 			FakeGame{over: true, winner: min}}}
-		Expect(Minimax(game, max)).To(Equal(-1))
+		Expect(Minimax(game, max)).To(Equal(0))
 	})
 })
 
