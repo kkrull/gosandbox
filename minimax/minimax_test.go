@@ -16,8 +16,19 @@ var _ = Describe("Minimax", func() {
 		game := FakeGame{over: true}
 		Expect(Minimax(game, max)).To(Equal(0))
 	})
+
+	XIt("scores a game won by the maximizing player as +1", func() {
+		game := FakeGame{over: true, winner: max}
+		Expect(Minimax(game, max)).To(Equal(1))
+	})
 })
 
 type FakeGame struct {
 	over bool
+	winner Player
 }
+
+func (game FakeGame) IsOver() bool {
+	return game.over
+}
+
