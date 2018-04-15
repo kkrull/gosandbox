@@ -68,3 +68,17 @@ Then set up your environment
 Testing is built in with the [[https://golang.org/pkg/testing][testing]] package.  Hooray!
 
 .code greet/greet_test.go
+
+
+* Go test
+
+Testing is built into the standard go tool chain:
+
+    $ go test
+    PASS
+    ok      github.com/kkrull/gosandbox/zagaku/greet        0.008s
+
+
+* Go learn some primitives
+
+.code annotated_greet/annotated_greet_test.go
