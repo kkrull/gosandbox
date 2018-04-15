@@ -10,8 +10,61 @@ https://kkrull.github.io/
 @KrullKyle
 
 
-* Go...why?
+* Go...how?
 
-.image images/gopher.png _ 200
+So you want to learn Go.  _How_do_you_do_that?_
 
-Some text goes here
+The authors of Structure & Interpretation of Computer Programs recommend studying:
+
+- primitives
+- means of combination
+- means of abstraction
+
+.image images/sicp-wizard.jpg _ 300
+
+
+* Go ponder one more question
+
+There's one more aspect to study when learning a new language.
+
+*the*means*of*testing*
+
+Testing early gives you a quick feedback loop to help you learn the other 3 aspects of the language.
+
+To say I have learned some new syntax or language feature, I want to be able to:
+
+- write the code that uses it
+- write the code that verifies its outcome
+
+
+* Go get to the point
+
+For today, what can we learn about Go by writing tests?
+
+Think of this as writing your own Koans for Go.
+
+
+* Go get started
+
+Download the binary distribution [[https://golang.org/doc/install]], or
+
+    $ brew install go
+
+
+Then set up your environment
+
+1. Set your `GOPATH`.
+2. Add Go binaries to your system PATH.
+
+    go version >/dev/null 2>&1
+    if (( $? == 0 ))
+    then
+      export PATH="$PATH:$(go env GOPATH)/bin"
+    fi
+
+
+* Go test
+
+Testing is built in with the [[https://golang.org/pkg/testing][testing]] package.  Hooray!
+
+.code greet/greet_test.go
