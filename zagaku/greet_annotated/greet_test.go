@@ -1,4 +1,4 @@
-//annotated_greet_test.go -- test sources end in _test.go // HL
+//greet_test.go -- test sources end in _test.go // HL
 package annotated_greet
 
 import "testing"

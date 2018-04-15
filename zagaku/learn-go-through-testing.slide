@@ -81,7 +81,7 @@ Testing is built into the standard go tool chain:
 
 * Go learn some primitives
 
-.code annotated_greet/annotated_greet_test.go
+.code greet_annotated/greet_test.go
 
 
 * Go get some better testing libraries
