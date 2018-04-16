@@ -88,7 +88,7 @@ Testing is built in with the [[https://golang.org/pkg/testing][testing]] package
 
 [[http://onsi.github.io/ginkgo/][Ginkgo]] offers a spec-style test syntax that's much more expressive.
 
-[[http://onsi.github.io/gomega/][Gomega]] has assertion functions and argument matchers that integrate nicely with Ginkgo.
+[[http://onsi.github.io/gomega/][Gomega]] has assertion functions and argument matchers that integrate with Ginkgo.
 
     $ go get github.com/onsi/ginkgo/ginkgo
     $ go get github.com/onsi/gomega/...
@@ -126,6 +126,11 @@ Run tests with
 .code primitive/channel_test.go /START OMIT/,/END OMIT/
 
 
-* go do _all_the_things_ at once
+* go do  all the things at once
 
 .code primitive/goroutine_test.go /START OMIT/,/END OMIT/
+
+
+* go meet the editor...
+
+.image images/editor.jpg _ 700
