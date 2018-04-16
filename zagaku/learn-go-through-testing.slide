@@ -39,7 +39,7 @@ To say I have learned some new syntax or language feature, I want to be able to:
 
 * Go get to the point
 
-For today, what can we learn about Go by writing tests?
+For today, what can we learn about Go _by_writing_tests_?
 
 Think of this as writing your own Koans for Go.
 
@@ -62,17 +62,17 @@ Then set up your environment
       export PATH="$PATH:$(go env GOPATH)/bin"
     fi
 
+3. Use the `go` tools:
+
+- $ go get <url> – download a package to $GOPATH/src
+- $ go {build|run|install} – compile, run, and install binaries to $GOPATH/bin
+
 
 * Go test
 
 Testing is built in with the [[https://golang.org/pkg/testing][testing]] package.  Hooray!
 
 .code greet/greet_test.go
-
-
-* Go test
-
-Testing is built into the standard go tool chain:
 
     $ go test
     PASS
@@ -88,8 +88,17 @@ Testing is built into the standard go tool chain:
 
 [[http://onsi.github.io/ginkgo/][Ginkgo]] offers a spec-style test syntax that's much more expressive.
 
-[[http://onsi.github.io/gomega/][Gomega]] has assertion functions and integrates nicely with Ginkgo.
+[[http://onsi.github.io/gomega/][Gomega]] has assertion functions and argument matchers that integrate nicely with Ginkgo.
 
-Now you can write...
+    $ go get github.com/onsi/ginkgo/ginkgo
+    $ go get github.com/onsi/gomega/...
 
-.code greet_with_ginkgo/greet_test.go
+Now you can describe behavior and organize your tests...
+
+.code greet_with_ginkgo/greet_test.go /START OMIT/,/END OMIT/
+
+Run tests with
+
+- `go`test`
+- `ginkgo`[watch]`
+

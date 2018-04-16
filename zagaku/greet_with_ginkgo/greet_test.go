@@ -7,8 +7,10 @@ import (
 	. "github.com/kkrull/gosandbox/zagaku/greet_with_ginkgo"
 )
 
+// START OMIT
 var _ = Describe("Greet", func() {
   It("Greets the world when no names are given", func() {
     Expect(Greet()).To(Equal("Hello World!"))
   })
 })
+// END OMIT
