@@ -1,7 +1,11 @@
 package minimax
 
 func Minimax(game Game, player Player) int {
-	return Negamax(game, 1)
+	if player == game.MaximizingPlayer() {
+		return Negamax(game, 1)
+	} else {
+		return -Negamax(game, -1)
+	}
 }
 
 func Negamax(game Game, polarity int) int {
