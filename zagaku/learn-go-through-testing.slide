@@ -128,4 +128,4 @@ Run tests with
 
 * go do _all_the_things_ at once
 
-asdf
+.code primitive/goroutine_test.go /START OMIT/,/END OMIT/

@@ -6,13 +6,13 @@ import (
 )
 
 // START OMIT
-var _ = Describe("Channel", func() {
+var _ = Describe("Channels", func() {
 	var (
 		wrongAnswer = 41
 		rightAnswer = 42
 	)
 
-	It("acts as a buffered FIFO queue", func() {
+	It("act like a buffered FIFO queue", func() {
 		answers := make(chan int, 2) // The addition of a capacity makes it a buffered channel // HL
 		answers <- wrongAnswer
 		answers <- rightAnswer
@@ -21,7 +21,7 @@ var _ = Describe("Channel", func() {
 		Expect(<-answers).To(Equal(rightAnswer)) //42
 	})
 
-	It("blocks when unbuffered", func(done Done) { //Note the "Done" object (like Mocha) // HL
+	XIt("block when unbuffered", func(done Done) { //Note the "Done" object (like Mocha) // HL
 		answers := make(chan string)
 		answers <- "one at a time"
 		answers <- "will block until somebody receives the first answer" // Blocks // HL
