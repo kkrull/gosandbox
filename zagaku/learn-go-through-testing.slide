@@ -116,9 +116,10 @@ Run tests with
 .code greet_with_ginkgo/greet_blank_test.go
 
 
-* go learn some nuances about zero values
+* go learn about structs
 
-asdf
+.code primitive/struct_test.go /START OMIT/,/END OMIT/
+
 
 
 * channels are a thing
