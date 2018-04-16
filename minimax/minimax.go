@@ -17,8 +17,16 @@ func Negamax(game Game, polarity int) int {
 		return 0
 	}
 
-	nextGame := game.NextGames()[0]
-	return -Negamax(nextGame, -1 * polarity)
+	bestScore := -100
+	for _, nextGame := range game.NextGames() {
+		scoreFromOpponentPerspective := Negamax(nextGame, -1 * polarity)
+		scoreFromMyPerspective := -1 * scoreFromOpponentPerspective
+		if scoreFromMyPerspective > bestScore {
+			bestScore = scoreFromMyPerspective
+		}
+	}
+
+	return bestScore
 }
 
 type Game interface {
