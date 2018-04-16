@@ -7,7 +7,10 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-func TestGreet(t *testing.T) {
+// START OMIT
+//greet_suite_test.go
+func TestGreet(t *testing.T) { //Integration with built-in testing // HL
 	RegisterFailHandler(Fail)
 	RunSpecs(t, "Greet Suite")
 }
+// END OMIT

@@ -102,3 +102,30 @@ Run tests with
 - `go`test`
 - `ginkgo`[watch]`
 
+
+* Ginkgo integrates with built-in testing
+
+    $ cd greet_with_ginkgo
+    $ ginkgo bootstrap
+
+.code greet_with_ginkgo/greet_suite_test.go /START OMIT/,/END OMIT/
+
+
+    $ ginkgo generate greet_blank
+
+.code greet_with_ginkgo/greet_blank_test.go
+
+
+* go learn some nuances about zero values
+
+asdf
+
+
+* channels are a thing
+
+asdf
+
+
+* go do _all_the_things_ at once
+
+asdf
