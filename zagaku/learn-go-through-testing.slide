@@ -116,15 +116,14 @@ Run tests with
 .code greet_with_ginkgo/greet_blank_test.go
 
 
-* go learn about structs
+* go learn a primitive: structs
 
 .code primitive/struct_test.go /START OMIT/,/END OMIT/
 
 
-
 * channels are a thing
 
-asdf
+.code primitive/channel_test.go /START OMIT/,/END OMIT/
 
 
 * go do _all_the_things_ at once
