@@ -28,7 +28,7 @@ var _ = Describe("Minimax", func() {
 		Expect(Minimax(game, max)).To(Equal(-1))
 	})
 
-	It("returns the score achieved by making the penultimate move", func() {
+	It("returns the score achieved when the maximizing player makes the penultimate move", func() {
 		game := FakeGame{nextGames: []Game{
 			FakeGame{isOver: true, winner: max},
 		}}
@@ -41,6 +41,14 @@ var _ = Describe("Minimax", func() {
 			FakeGame{isOver: true, winner: max},
 		}}
 		Expect(Minimax(game, max)).To(Equal(1))
+	})
+
+	It("returns the minimum score the minimizing player can achieve from future games states", func() {
+		game := FakeGame{nextGames: []Game{
+			FakeGame{isOver: true},
+			FakeGame{isOver: true, winner: min},
+		}}
+		Expect(Minimax(game, min)).To(Equal(-1))
 	})
 })
 
