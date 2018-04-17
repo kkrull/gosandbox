@@ -1,35 +1,31 @@
 package minimax
 
 func Minimax(game Game, player Player) int {
+	if player == game.MaximizingPlayer() {
+		return Negamax(game, 1)
+	} else {
+		return -Negamax(game, -1)
+	}
+}
+
+func Negamax(game Game, polarity int) int {
 	if game.FindWinner() == game.MaximizingPlayer() {
-		return 1
+		return 1 * polarity
 	} else if game.FindWinner() == game.MinimizingPlayer() {
-		return -1
+		return -1 * polarity
 	} else if game.IsOver() {
 		return 0
 	}
 
-	if player == game.MaximizingPlayer() {
-		bestScore := -100
-		for _, nextGame := range game.NextGames() {
-			score := Minimax(nextGame, player)
-			if score > bestScore {
-				bestScore = score
-			}
+	bestScore := -100
+	for _, nextGame := range game.NextGames() {
+		score := -Negamax(nextGame, -1*polarity)
+		if score > bestScore {
+			bestScore = score
 		}
-
-		return bestScore
-	} else {
-		bestScore := 100
-		for _, nextGame := range game.NextGames() {
-			score := Minimax(nextGame, player)
-			if score < bestScore {
-				bestScore = score
-			}
-		}
-
-		return bestScore
 	}
+
+	return bestScore
 }
 
 type Game interface {
