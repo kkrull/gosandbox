@@ -9,7 +9,9 @@ func Minimax(game Game, player Player) int {
 		return 0
 	}
 
-	return -999
+	nextGame := game.NextGames()[0]
+	score := Minimax(nextGame, player)
+	return score
 }
 
 type Game interface {
@@ -17,6 +19,7 @@ type Game interface {
 	IsOver() bool
 	MaximizingPlayer() Player
 	MinimizingPlayer() Player
+	NextGames() []Game
 }
 
 type Player struct {
