@@ -34,6 +34,14 @@ var _ = Describe("Minimax", func() {
 		}}
 		Expect(Minimax(game, max)).To(Equal(1))
 	})
+
+	It("returns the maximum score the maximizing player can achieve from future game states", func() {
+		game := FakeGame{nextGames: []Game{
+			FakeGame{isOver: true},
+			FakeGame{isOver: true, winner: max},
+		}}
+		Expect(Minimax(game, max)).To(Equal(1))
+	})
 })
 
 type FakeGame struct {

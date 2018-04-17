@@ -9,9 +9,15 @@ func Minimax(game Game, player Player) int {
 		return 0
 	}
 
-	nextGame := game.NextGames()[0]
-	score := Minimax(nextGame, player)
-	return score
+	bestScore := -100
+	for _, nextGame := range game.NextGames() {
+		score := Minimax(nextGame, player)
+		if score > bestScore {
+			bestScore = score
+		}
+	}
+	
+	return bestScore
 }
 
 type Game interface {
