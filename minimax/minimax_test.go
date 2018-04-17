@@ -9,6 +9,7 @@ import (
 
 var (
 	max = Player{Name: "Max"}
+	min = Player{Name: "Min"}
 )
 
 var _ = Describe("Minimax", func() {
@@ -20,6 +21,11 @@ var _ = Describe("Minimax", func() {
 	It("scores a game won by the maximizing player as +1", func() {
 		game := FakeGame{isOver: true, winner: max}
 		Expect(Minimax(game, max)).To(Equal(1))
+	})
+
+	It("scores a game won by the minimizing player as -1", func() {
+		game := FakeGame{isOver: true, winner: min}
+		Expect(Minimax(game, max)).To(Equal(-1))
 	})
 })
 
@@ -34,6 +40,10 @@ func (game FakeGame) FindWinner() Player {
 
 func (game FakeGame) MaximizingPlayer() Player {
 	return max
+}
+
+func (game FakeGame) MinimizingPlayer() Player {
+	return min
 }
 
 func (game FakeGame) IsOver() bool {
