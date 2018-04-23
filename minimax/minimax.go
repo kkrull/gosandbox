@@ -1,35 +1,31 @@
 package minimax
 
 func Minimax(game Game, player Player) int {
+	if player == game.MaximizingPlayer() {
+		return Negamax(game, 1)
+	} else {
+		return -Negamax(game, -1)
+	}
+}
+
+func Negamax(game Game, polarity int) int {
 	if game.FindWinner() == game.MaximizingPlayer() {
-		return 1
+		return 1 * polarity
 	} else if game.FindWinner() == game.MinimizingPlayer() {
-		return -1
+		return -1 * polarity
 	} else if game.IsOver() {
 		return 0
 	}
 
-	if player == game.MaximizingPlayer() {
-		maxScore := -100
-		for _, nextGame := range GameStatesFromNextMove(game, player) {
-			score := Minimax(nextGame, game.MinimizingPlayer())
-			if score > maxScore {
-				maxScore = score
-			}
+	maxScore := -100
+	for _, nextGame := range GameStatesFromNextMove(game, game.MaximizingPlayer()) {
+		score := -Negamax(nextGame, -1 * polarity)
+		if score > maxScore {
+			maxScore = score
 		}
-
-		return maxScore
-	} else {
-		minScore := 100
-		for _, nextGame := range GameStatesFromNextMove(game, player) {
-			score := Minimax(nextGame, game.MaximizingPlayer())
-			if score < minScore {
-				minScore = score
-			}
-		}
-
-		return minScore
 	}
+
+	return maxScore
 }
 
 func GameStatesFromNextMove(game Game, player Player) []Game {
