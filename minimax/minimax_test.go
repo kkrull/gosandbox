@@ -67,11 +67,11 @@ type FakeGame struct {
 	nextMoves []Move
 }
 
-func (game *FakeGame) AvailableMoves(player Player) []Move {
+func (game *FakeGame) AvailableMoves() []Move {
 	return game.nextMoves
 }
 
-func (game *FakeGame) Move(player Player, move Move) Game {
+func (game *FakeGame) Move(move Move) Game {
 	for i, nextMove := range game.nextMoves {
 		if move == nextMove {
 			return game.nextGames[i]

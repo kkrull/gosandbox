@@ -18,7 +18,7 @@ func Negamax(game Game, polarity int) int {
 	}
 
 	maxScore := -100
-	for _, nextGame := range GameStatesFromNextMove(game, game.MaximizingPlayer()) {
+	for _, nextGame := range GameStatesFromNextMove(game) {
 		score := -Negamax(nextGame, -1 * polarity)
 		if score > maxScore {
 			maxScore = score
@@ -28,10 +28,10 @@ func Negamax(game Game, polarity int) int {
 	return maxScore
 }
 
-func GameStatesFromNextMove(game Game, player Player) []Game {
+func GameStatesFromNextMove(game Game) []Game {
 	nextGames := make([]Game, 0)
-	for _, move := range game.AvailableMoves(player) {
-		nextGame := game.Move(player, move)
+	for _, move := range game.AvailableMoves() {
+		nextGame := game.Move(move)
 		nextGames = append(nextGames, nextGame)
 	}
 
@@ -39,12 +39,12 @@ func GameStatesFromNextMove(game Game, player Player) []Game {
 }
 
 type Game interface {
-	AvailableMoves(player Player) []Move
+	AvailableMoves() []Move
 	IsOver() bool
 	FindWinner() Player
 	MaximizingPlayer() Player
 	MinimizingPlayer() Player
-	Move(player Player, move Move) Game
+	Move(move Move) Game
 }
 
 type Move struct {
