@@ -10,25 +10,26 @@ import (
 )
 
 var (
-	max  = Player{Name: "Max"}
-	min  = Player{Name: "Min"}
-	game Game
+	max    = Player{Name: "Max"}
+	min    = Player{Name: "Min"}
+	game   Game
+	scorer = &Scorer{GameStatesFromNextMove: &FakeGameTransitions{}}
 )
 
-var _ = Describe("Minimax", func() {
+var _ = Describe("Score", func() {
 	It("scores a game ending in a draw as 0", func() {
 		game = &FakeGame{isOver: true}
-		Expect(Minimax(game, max)).To(Equal(0))
+		Expect(scorer.Score(game, max)).To(Equal(0))
 	})
 
 	It("scores a game won by the maximizing player as +1", func() {
 		game = &FakeGame{isOver: true, winner: max}
-		Expect(Minimax(game, max)).To(Equal(1))
+		Expect(scorer.Score(game, max)).To(Equal(1))
 	})
 
 	It("scores a game won by the minimizing player as -1", func() {
 		game = &FakeGame{isOver: true, winner: min}
-		Expect(Minimax(game, max)).To(Equal(-1))
+		Expect(scorer.Score(game, max)).To(Equal(-1))
 	})
 
 	It("returns the maximum possible score for the maximizing player, given an unfinished game", func() {
@@ -42,7 +43,7 @@ var _ = Describe("Minimax", func() {
 				Move{Id: "max chooses wisely"},
 			},
 		}
-		Expect(Minimax(game, max)).To(Equal(1))
+		Expect(scorer.Score(game, max)).To(Equal(1))
 	})
 
 	It("returns the minimum possible score for the minimizing player, given an unfinished game", func() {
@@ -56,9 +57,25 @@ var _ = Describe("Minimax", func() {
 				Move{Id: "min chooses wisely"},
 			},
 		}
-		Expect(Minimax(game, min)).To(Equal(-1))
+		Expect(scorer.Score(game, min)).To(Equal(-1))
 	})
 })
+
+type FakeGameTransitions struct {
+
+}
+
+
+func (transition *FakeGameTransitions) GameStatesFromNextMove(game Game) []Game {
+	nextGames := make([]Game, 0)
+	for _, move := range game.AvailableMoves() {
+		nextGame := game.Move(move)
+		nextGames = append(nextGames, nextGame)
+	}
+
+	return nextGames
+}
+
 
 type FakeGame struct {
 	isOver    bool

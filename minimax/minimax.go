@@ -1,14 +1,20 @@
 package minimax
 
-func Minimax(game Game, player Player) int {
-	if player == game.MaximizingPlayer() {
-		return Negamax(game, 1)
-	} else {
-		return -Negamax(game, -1)
+type Scorer struct {
+	GameStatesFromNextMove interface{
+		GameStatesFromNextMove(game Game) []Game
 	}
 }
 
-func Negamax(game Game, polarity int) int {
+func (scorer *Scorer) Score(game Game, player Player) int {
+	if player == game.MaximizingPlayer() {
+		return scorer.Negamax(game, 1)
+	} else {
+		return -scorer.Negamax(game, -1)
+	}
+}
+
+func (scorer *Scorer) Negamax(game Game, polarity int) int {
 	if game.FindWinner() == game.MaximizingPlayer() {
 		return 1 * polarity
 	} else if game.FindWinner() == game.MinimizingPlayer() {
@@ -18,24 +24,14 @@ func Negamax(game Game, polarity int) int {
 	}
 
 	maxScore := -100
-	for _, nextGame := range GameStatesFromNextMove(game) {
-		score := -Negamax(nextGame, -1 * polarity)
+	for _, nextGame := range scorer.GameStatesFromNextMove.GameStatesFromNextMove(game) {
+		score := -scorer.Negamax(nextGame, -1 * polarity)
 		if score > maxScore {
 			maxScore = score
 		}
 	}
 
 	return maxScore
-}
-
-func GameStatesFromNextMove(game Game) []Game { //TODO KDK: Does this belong in its own type?
-	nextGames := make([]Game, 0)
-	for _, move := range game.AvailableMoves() {
-		nextGame := game.Move(move)
-		nextGames = append(nextGames, nextGame)
-	}
-
-	return nextGames
 }
 
 type Game interface {
