@@ -28,7 +28,7 @@ func Negamax(game Game, polarity int) int {
 	return maxScore
 }
 
-func GameStatesFromNextMove(game Game) []Game {
+func GameStatesFromNextMove(game Game) []Game { //TODO KDK: Does this belong in its own type?
 	nextGames := make([]Game, 0)
 	for _, move := range game.AvailableMoves() {
 		nextGame := game.Move(move)
