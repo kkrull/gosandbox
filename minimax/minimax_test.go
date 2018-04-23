@@ -1,6 +1,8 @@
 package minimax_test
 
 import (
+	"fmt"
+
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
@@ -35,6 +37,10 @@ var _ = Describe("Minimax", func() {
 				&FakeGame{isOver: true},
 				&FakeGame{isOver: true, winner: max},
 			},
+			nextMoves: []Move{
+				Move{Id: "max chooses poorly"},
+				Move{Id: "max chooses wisely"},
+			},
 		}
 		Expect(Minimax(game, max)).To(Equal(1))
 	})
@@ -45,6 +51,10 @@ var _ = Describe("Minimax", func() {
 				&FakeGame{isOver: true},
 				&FakeGame{isOver: true, winner: min},
 			},
+			nextMoves: []Move{
+				Move{Id: "min chooses poorly"},
+				Move{Id: "min chooses wisely"},
+			},
 		}
 		Expect(Minimax(game, min)).To(Equal(-1))
 	})
@@ -54,10 +64,21 @@ type FakeGame struct {
 	isOver    bool
 	winner    Player
 	nextGames []Game
+	nextMoves []Move
 }
 
-func (game *FakeGame) GameStatesFromNextMove(player Player) []Game {
-	return game.nextGames
+func (game *FakeGame) AvailableMoves(player Player) []Move {
+	return game.nextMoves
+}
+
+func (game *FakeGame) Move(player Player, move Move) Game {
+	for i, nextMove := range game.nextMoves {
+		if move == nextMove {
+			return game.nextGames[i]
+		}
+	}
+
+	panic(fmt.Sprintf("next game not found for move %v", move))
 }
 
 func (game *FakeGame) FindWinner() Player {
