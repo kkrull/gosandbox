@@ -12,7 +12,7 @@ func Minimax(game Game, player Player) int {
 	if player == game.MaximizingPlayer() {
 		maxScore := -100
 		for _, nextGame := range game.GameStatesFromNextMove(player) {
-			score := Minimax(nextGame, player)
+			score := Minimax(nextGame, game.MinimizingPlayer())
 			if score > maxScore {
 				maxScore = score
 			}
@@ -22,7 +22,7 @@ func Minimax(game Game, player Player) int {
 	} else {
 		minScore := 100
 		for _, nextGame := range game.GameStatesFromNextMove(player) {
-			score := Minimax(nextGame, player)
+			score := Minimax(nextGame, game.MaximizingPlayer())
 			if score < minScore {
 				minScore = score
 			}
