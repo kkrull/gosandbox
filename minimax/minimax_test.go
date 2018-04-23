@@ -7,10 +7,14 @@ import (
 	. "github.com/kkrull/gosandbox/minimax"
 )
 
+var (
+	max  = Player{Name: "Max"}
+	game Game
+)
+
 var _ = Describe("Minimax", func() {
 	It("scores a game ending in a draw as 0", func() {
-		game := &FakeGame{isOver: true}
-		max := Player{Name: "Max"}
+		game = &FakeGame{isOver: true}
 		Expect(Minimax(game, max)).To(Equal(0))
 	})
 })
