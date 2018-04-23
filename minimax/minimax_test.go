@@ -38,6 +38,16 @@ var _ = Describe("Minimax", func() {
 		}
 		Expect(Minimax(game, max)).To(Equal(1))
 	})
+
+	It("returns the minimum possible score for the minimizing player, given an unfinished game", func() {
+		game = &FakeGame{
+			nextGames: []Game{
+				&FakeGame{isOver: true},
+				&FakeGame{isOver: true, winner: min},
+			},
+		}
+		Expect(Minimax(game, min)).To(Equal(-1))
+	})
 })
 
 type FakeGame struct {
