@@ -14,12 +14,21 @@ func (scorer Minimax) Score(game Game, player Player) int {
 		return 0
 	}
 
-	return 999
+	maxScore := -100
+	for _, nextGame := range game.NextPossibleGames() {
+		nextScore := scorer.Score(nextGame, scorer.MinimizingPlayer)
+		if nextScore > maxScore {
+			maxScore = nextScore
+		}
+	}
+
+	return maxScore
 }
 
 type Game interface {
 	FindWinner() Player
 	IsOver() bool
+	NextPossibleGames() []Game
 }
 
 type Player struct {
