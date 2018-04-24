@@ -39,6 +39,10 @@ var _ = Describe("Minimax", func() {
 					&FakeGame{isOver: true},
 					&FakeGame{isOver: true, winner: max},
 				},
+				nextMoves: []Move{
+					Move{Id: "Max Chooses....Poorly"},
+					Move{Id: "Max Chooses....Wisely"},
+				},
 			}
 			Expect(scorer.Score(game, max)).To(Equal(1))
 		})
@@ -48,11 +52,22 @@ var _ = Describe("Minimax", func() {
 type FakeGame struct {
 	isOver    bool
 	winner    Player
+	nextMoves []Move
 	nextGames []Game
 }
 
-func (game *FakeGame) NextPossibleGames() []Game {
-	return game.nextGames
+func (game *FakeGame) AvailableMoves() []Move {
+	return game.nextMoves
+}
+
+func (game *FakeGame) Move(selectedMove Move) Game {
+	for i, move := range game.nextMoves {
+		if move == selectedMove	{
+			return game.nextGames[i]
+		}
+	}
+
+	panic("Unrecognized move")
 }
 
 func (game *FakeGame) FindWinner() Player {

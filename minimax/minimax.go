@@ -15,7 +15,8 @@ func (scorer Minimax) Score(game Game, player Player) int {
 	}
 
 	maxScore := -100
-	for _, nextGame := range game.NextPossibleGames() {
+	for _, move := range game.AvailableMoves() {
+		nextGame := game.Move(move)
 		nextScore := scorer.Score(nextGame, scorer.MinimizingPlayer)
 		if nextScore > maxScore {
 			maxScore = nextScore
@@ -26,9 +27,14 @@ func (scorer Minimax) Score(game Game, player Player) int {
 }
 
 type Game interface {
+	AvailableMoves() []Move
 	FindWinner() Player
 	IsOver() bool
-	NextPossibleGames() []Game
+	Move(move Move) Game
+}
+
+type Move struct {
+	Id string
 }
 
 type Player struct {
