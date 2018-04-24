@@ -9,8 +9,10 @@ import (
 
 var (
 	max    = Player{Name: "Max"}
+	min    = Player{Name: "Min"}
 	scorer = Minimax{
 		MaximizingPlayer: max,
+		MinimizingPlayer: min,
 	}
 )
 
@@ -21,9 +23,14 @@ var _ = Describe("Minimax", func() {
 			Expect(scorer.Score(game, max)).To(Equal(0))
 		})
 
-		It("scores a gamw won by the maximizing player as +1", func() {
+		It("scores a game won by the maximizing player as +1", func() {
 			game := &FakeGame{isOver: true, winner: max}
 			Expect(scorer.Score(game, max)).To(Equal(1))
+		})
+
+		It("scores a game won by the minimizing player as -1", func() {
+			game := &FakeGame{isOver: true, winner: min}
+			Expect(scorer.Score(game, max)).To(Equal(-1))
 		})
 	})
 })
