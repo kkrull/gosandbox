@@ -33,7 +33,7 @@ var _ = Describe("Minimax", func() {
 			Expect(scorer.Score(game, max)).To(Equal(-1))
 		})
 
-		It("scores maximizes the score for the maximizing player, among all possible outcomes", func() {
+		It("maximizes the score for the maximizing player, among all possible outcomes", func() {
 			game := &FakeGame{
 				nextGames: []Game{
 					&FakeGame{isOver: true},
@@ -45,6 +45,20 @@ var _ = Describe("Minimax", func() {
 				},
 			}
 			Expect(scorer.Score(game, max)).To(Equal(1))
+		})
+
+		It("minimizes the score for the minimizing player, among all possible outcomes", func() {
+			game := &FakeGame{
+				nextGames: []Game{
+					&FakeGame{isOver: true},
+					&FakeGame{isOver: true, winner: min},
+				},
+				nextMoves: []Move{
+					Move{Id: "Min Chooses....Poorly"},
+					Move{Id: "Min Chooses....Wisely"},
+				},
+			}
+			Expect(scorer.Score(game, min)).To(Equal(-1))
 		})
 	})
 })
