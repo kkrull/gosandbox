@@ -14,16 +14,29 @@ func (scorer *Scorer) Score(game Game, player Player) int {
 		return 0
 	}
 
-	maxScore := -100
-	for _, move := range game.AvailableMoves() {
-		nextGame := game.Move(move)
-		nextScore := scorer.Score(nextGame, scorer.MinimizingPlayer)
-		if nextScore > maxScore {
-			maxScore = nextScore
+	if player == scorer.MaximizingPlayer {
+		maxScore := -100
+		for _, move := range game.AvailableMoves() {
+			nextGame := game.Move(move)
+			nextScore := scorer.Score(nextGame, scorer.MinimizingPlayer)
+			if nextScore > maxScore {
+				maxScore = nextScore
+			}
 		}
-	}
 
-	return maxScore
+		return maxScore
+	} else {
+		minScore := 100
+		for _, move := range game.AvailableMoves() {
+			nextGame := game.Move(move)
+			nextScore := scorer.Score(nextGame, scorer.MaximizingPlayer)
+			if nextScore < minScore {
+				minScore = nextScore
+			}
+		}
+
+		return minScore
+	}
 }
 
 type Game interface {

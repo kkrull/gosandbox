@@ -38,6 +38,13 @@ var _ = Describe("Scorer", func() {
 			game.AddStateTransition(Move{Id: "Max chooses...wisely"}, &GameWithKnownStates{isOver: true, winner: max})
 			Expect(scorer.Score(game, max)).To(Equal(1))
 		})
+
+		It("scores the minimum possible score for the minimizing player in an unfinished game", func() {
+			game := &GameWithKnownStates{}
+			game.AddStateTransition(Move{Id: "Min chooses...poorly"}, &GameWithKnownStates{isOver: true})
+			game.AddStateTransition(Move{Id: "Min chooses...wisely"}, &GameWithKnownStates{isOver: true, winner: min})
+			Expect(scorer.Score(game, min)).To(Equal(-1))
+		})
 	})
 })
 
