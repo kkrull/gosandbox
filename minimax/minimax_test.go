@@ -8,8 +8,10 @@ import (
 
 var (
 	max    = Player{Name: "Max"}
+	min    = Player{Name: "Min"}
 	scorer = minimax.Scorer{
 		MaximizingPlayer: max,
+		MinimizingPlayer: min,
 	}
 )
 
@@ -23,6 +25,11 @@ var _ = Describe("Scorer", func() {
 		It("scores a game won by the maximizing player as +1", func() {
 			game := &GameWithKnownStates{isOver: true, winner: max}
 			Expect(scorer.Score(game, max)).To(Equal(1))
+		})
+
+		It("scores a game won by the minimizing player as -1", func() {
+			game := &GameWithKnownStates{isOver: true, winner: min}
+			Expect(scorer.Score(game, max)).To(Equal(-1))
 		})
 	})
 })
