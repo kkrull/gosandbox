@@ -31,12 +31,35 @@ var _ = Describe("Scorer", func() {
 			game := &GameWithKnownStates{isOver: true, winner: min}
 			Expect(scorer.Score(game, max)).To(Equal(-1))
 		})
+
+		It("scores the maximum possible score for the maximizing player in an unfinished game", func() {
+			game := &GameWithKnownStates{}
+			game.AddStateTransition(Move{Id: "Max chooses...poorly"}, &GameWithKnownStates{isOver: true})
+			game.AddStateTransition(Move{Id: "Max chooses...wisely"}, &GameWithKnownStates{isOver: true, winner: max})
+			Expect(scorer.Score(game, max)).To(Equal(1))
+		})
 	})
 })
 
 type GameWithKnownStates struct {
 	isOver bool
 	winner Player
+	openMoves []minimax.Move
+	nextGames []minimax.Game
+}
+
+func (game *GameWithKnownStates) AvailableMoves() []minimax.Move {
+	return game.openMoves
+}
+
+func (game *GameWithKnownStates) Move(move minimax.Move) minimax.Game {
+	for i, openMove := range game.openMoves {
+		if openMove == move {
+			return game.nextGames[i]
+		}
+	}
+
+	panic("next game not found")
 }
 
 func (game *GameWithKnownStates) FindWinner() minimax.Player {
@@ -45,6 +68,15 @@ func (game *GameWithKnownStates) FindWinner() minimax.Player {
 
 func (game *GameWithKnownStates) IsOver() bool {
 	return game.isOver
+}
+
+func (game *GameWithKnownStates) AddStateTransition(move Move, nextGame *GameWithKnownStates) {
+	game.openMoves = append(game.openMoves, move)
+	game.nextGames = append(game.nextGames, nextGame)
+}
+
+type Move struct {
+	Id string
 }
 
 type Player struct {

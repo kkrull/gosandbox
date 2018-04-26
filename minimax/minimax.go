@@ -14,12 +14,25 @@ func (scorer *Scorer) Score(game Game, player Player) int {
 		return 0
 	}
 
-	return 999
+	maxScore := -100
+	for _, move := range game.AvailableMoves() {
+		nextGame := game.Move(move)
+		nextScore := scorer.Score(nextGame, scorer.MinimizingPlayer)
+		if nextScore > maxScore {
+			maxScore = nextScore
+		}
+	}
+
+	return maxScore
 }
 
 type Game interface {
 	IsOver() bool
 	FindWinner() Player
+	AvailableMoves() []Move
+	Move(move Move) Game
 }
+
+type Move interface {}
 
 type Player interface {}
