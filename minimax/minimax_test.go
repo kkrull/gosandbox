@@ -8,7 +8,9 @@ import (
 
 var (
 	max    = Player{Name: "Max"}
-	scorer = minimax.Scorer{}
+	scorer = minimax.Scorer{
+		MaximizingPlayer: max,
+	}
 )
 
 var _ = Describe("Scorer", func() {
@@ -17,11 +19,21 @@ var _ = Describe("Scorer", func() {
 			game := &GameWithKnownStates{isOver: true}
 			Expect(scorer.Score(game, max)).To(Equal(0))
 		})
+
+		It("scores a game won by the maximizing player as +1", func() {
+			game := &GameWithKnownStates{isOver: true, winner: max}
+			Expect(scorer.Score(game, max)).To(Equal(1))
+		})
 	})
 })
 
 type GameWithKnownStates struct {
 	isOver bool
+	winner Player
+}
+
+func (game *GameWithKnownStates) FindWinner() minimax.Player {
+	return game.winner
 }
 
 func (game *GameWithKnownStates) IsOver() bool {
