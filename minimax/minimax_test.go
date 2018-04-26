@@ -3,7 +3,7 @@ package minimax_test
 import (
 	"github.com/kkrull/gosandbox/minimax"
 	. "github.com/onsi/ginkgo"
-	//. "github.com/onsi/gomega"
+	. "github.com/onsi/gomega"
 )
 
 var (
@@ -15,13 +15,17 @@ var _ = Describe("Scorer", func() {
 		It("scores a game ending in a draw as 0", func() {
 			scorer := minimax.Scorer{}
 			game := &GameWithKnownStates{isOver: true}
-			scorer.Score(game, max)
+			Expect(scorer.Score(game, max)).To(Equal(0))
 		})
 	})
 })
 
 type GameWithKnownStates struct {
 	isOver bool
+}
+
+func (game *GameWithKnownStates) IsOver() bool {
+	return game.isOver
 }
 
 type Player struct {
