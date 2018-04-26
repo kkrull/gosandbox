@@ -34,30 +34,16 @@ var _ = Describe("Minimax", func() {
 		})
 
 		It("maximizes the score for the maximizing player, among all possible outcomes", func() {
-			game := &FakeGame{
-				nextGames: []Game{
-					&FakeGame{isOver: true},
-					&FakeGame{isOver: true, winner: max},
-				},
-				nextMoves: []Move{
-					Move{Id: "Max Chooses....Poorly"},
-					Move{Id: "Max Chooses....Wisely"},
-				},
-			}
+			game := &FakeGame{}
+			game.AddNextGame(Move{Id: "Max Chooses....Poorly"}, &FakeGame{isOver: true})
+			game.AddNextGame(Move{Id: "Max Chooses....Wisely"}, &FakeGame{isOver: true, winner: max})
 			Expect(scorer.Score(game, max)).To(Equal(1))
 		})
 
 		It("minimizes the score for the minimizing player, among all possible outcomes", func() {
-			game := &FakeGame{
-				nextGames: []Game{
-					&FakeGame{isOver: true},
-					&FakeGame{isOver: true, winner: min},
-				},
-				nextMoves: []Move{
-					Move{Id: "Min Chooses....Poorly"},
-					Move{Id: "Min Chooses....Wisely"},
-				},
-			}
+			game := &FakeGame{}
+			game.AddNextGame(Move{Id: "Min Chooses....Poorly"}, &FakeGame{isOver: true})
+			game.AddNextGame(Move{Id: "Min Chooses....Wisely"}, &FakeGame{isOver: true, winner: min})
 			Expect(scorer.Score(game, min)).To(Equal(-1))
 		})
 	})
@@ -90,4 +76,9 @@ func (game *FakeGame) FindWinner() Player {
 
 func (game *FakeGame) IsOver() bool {
 	return game.isOver
+}
+
+func (game *FakeGame) AddNextGame(move Move, nextGame *FakeGame) {
+	game.nextMoves = append(game.nextMoves, move)
+	game.nextGames = append(game.nextGames, nextGame)
 }
