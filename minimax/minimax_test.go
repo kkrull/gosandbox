@@ -8,18 +8,16 @@ import (
 
 var _ = Describe("Scorer", func() {
 	var (
-		scorer *minimax.Scorer
-		game   *GameWithKnownStates
+		scorer = &minimax.Scorer{}
+
+		game *GameWithKnownStates
+		max  = minimax.Player("Max")
 	)
 
 	Describe("#Score", func() {
-		BeforeEach(func() {
-			scorer = &minimax.Scorer{}
-		})
-
 		It("scores a game ending in a draw as 0", func() {
 			game = &GameWithKnownStates{}
-			Expect("Universal Answer").To(Equal(42))
+			Expect(scorer.Score(game, max)).To(Equal(0))
 		})
 	})
 })
