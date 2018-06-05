@@ -8,10 +8,9 @@ import (
 
 var _ = Describe("Scorer", func() {
 	var (
+		game   *GameWithKnownStates
+		max    = minimax.Player("Max")
 		scorer = &minimax.Scorer{}
-
-		game *GameWithKnownStates
-		max  = minimax.Player("Max")
 	)
 
 	Describe("#Score", func() {
