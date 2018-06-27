@@ -6,17 +6,40 @@ type Scorer struct {
 }
 
 func (scorer *Scorer) Score(game GameState, player Player) int {
+	if player == scorer.Maximizer {
+		return scorer.negamax(game, 1)
+	} else {
+		return reversePerspective(scorer.negamax(game, -1))
+	}
+}
+
+func (scorer *Scorer) negamax(game GameState, polarity int) int {
 	if game.FindWinner() == scorer.Maximizer {
-		return 1
+		return 1 * polarity
 	} else if game.FindWinner() == scorer.Minimizer {
-		return -1
+		return reverseThe(polarity)
 	} else if game.IsOver() {
 		return 0
 	}
 
-	nextMove := game.AvailableMoves()[0]
-	nextGame := game.Move(nextMove)
-	return scorer.Score(nextGame, Player("Who?"))
+	maxScore := -10
+	for _, nextMove := range game.AvailableMoves() {
+		nextGame := game.Move(nextMove)
+		nextScore := reversePerspective(scorer.negamax(nextGame, reverseThe(polarity)))
+		if nextScore > maxScore {
+			maxScore = nextScore
+		}
+	}
+
+	return maxScore
+}
+
+func reversePerspective(score int) int {
+	return -1 * score
+}
+
+func reverseThe(polarity int) int {
+	return -1 * polarity
 }
 
 type GameState interface {

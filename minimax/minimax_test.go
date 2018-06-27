@@ -45,6 +45,36 @@ var _ = Describe("Scorer", func() {
 			game.AddKnownState(minimax.Move("MaxWins"), &GameWithKnownStates{isOver: true, winner: max})
 			Expect(scorer.Score(game, max)).To(Equal(1))
 		})
+
+		It("the minimizer picks the move with the lowest score, in an unfinished game", func() {
+			game = &GameWithKnownStates{}
+			game.AddKnownState(minimax.Move("Draw"), &GameWithKnownStates{isOver: true})
+			game.AddKnownState(minimax.Move("MaxLoses"), &GameWithKnownStates{isOver: true, winner: min})
+			Expect(scorer.Score(game, min)).To(Equal(-1))
+		})
+
+		Context("given a game with 2 or more moves left", func() {
+			BeforeEach(func() {
+				game = &GameWithKnownStates{}
+				leftTree := &GameWithKnownStates{}
+				game.AddKnownState(minimax.Move("Left"), leftTree)
+				leftTree.AddKnownState(minimax.Move("Draw"), &GameWithKnownStates{isOver: true})
+				leftTree.AddKnownState(minimax.Move("MaxWins"), &GameWithKnownStates{isOver: true, winner: max})
+
+				rightTree := &GameWithKnownStates{}
+				game.AddKnownState(minimax.Move("Right"), rightTree)
+				rightTree.AddKnownState(minimax.Move("Draw"), &GameWithKnownStates{isOver: true})
+				rightTree.AddKnownState(minimax.Move("MaxLoses"), &GameWithKnownStates{isOver: true, winner: min})
+			})
+
+			It("the maximizer assumes the minimizer picks the lowest score", func() {
+				Expect(scorer.Score(game, max)).To(Equal(0))
+			})
+
+			It("the minimizer assumes the maximizer picks the highest score", func() {
+				Expect(scorer.Score(game, min)).To(Equal(0))
+			})
+		})
 	})
 })
 
