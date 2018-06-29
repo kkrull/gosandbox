@@ -42,4 +42,4 @@ type GameState interface {
 }
 
 type Move string
-type Player string
+type Player interface {}
