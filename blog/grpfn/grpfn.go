@@ -34,17 +34,22 @@ func (router *HttpRouter) AddRoute(route Route) {
 }
 
 func (router HttpRouter) parse(reader *bufio.Reader) (Request, Response) {
-	request, response := newStringOrResponse(readCRLFLine(reader)).
-		Map(parseRequestLine).
-		Map(router.routeRequest)
+	requested, err := readRequestLine(reader)
+	if err != nil {
+		//No input, not ending in CRLF, or not a well-formed request
+		return nil, err
+	}
 
-	if response != nil {
-		return nil, response
-	} else if request == nil {
-		//Technically, this doesn't work because we now lack the intermediate value
-		return nil, requested.NotImplemented()
+	return router.requestOr501(requested)
+}
+
+//New function
+func readRequestLine(reader *bufio.Reader) (*RequestLine, Response) {
+	requestLineText, err := readCRLFLine(reader)
+	if err == nil {
+		return parseRequestLine(requestLineText)
 	} else {
-		return request, nil
+		return nil, err
 	}
 }
 
@@ -65,43 +70,6 @@ func readCRLFLine(reader *bufio.Reader) (string, Response) {
 	return trimmed, nil
 }
 
-func newStringOrResponse(data string, err Response) *StringOrResponse {
-	return &StringOrResponse{data: data, err: err}
-}
-
-type StringOrResponse struct {
-	data string
-	err Response
-}
-
-type ParseRequestLine func(text string) (*RequestLine, Response)
-func (either *StringOrResponse) Map(parse ParseRequestLine) *RequestLineOrResponse {
-	if either.err != nil {
-		return &RequestLineOrResponse{data: nil, err: either.err}
-	}
-
-	requestLine, err := parse(either.data)
-	if err != nil {
-		return &RequestLineOrResponse{data: nil, err: either.err}
-	}
-
-	return &RequestLineOrResponse{data: requestLine, err: nil}
-}
-
-type RequestLineOrResponse struct {
-	data *RequestLine
-	err Response
-}
-
-type RouteRequest func(requested *RequestLine) Request
-func (either *RequestLineOrResponse) Map(route RouteRequest) (Request, Response) {
-	if either.err != nil {
-		return nil, either.err
-	}
-
-	return route(either.data), nil
-}
-
 func parseRequestLine(text string) (*RequestLine, Response) {
 	fields := strings.Split(text, " ")
 	if len(fields) != 3 {
@@ -112,6 +80,17 @@ func parseRequestLine(text string) (*RequestLine, Response) {
 		Method: fields[0],
 		Target: fields[1],
 	}, nil
+}
+
+//New function
+func (router HttpRouter) requestOr501(line *RequestLine) (Request, Response) {
+	if request := router.routeRequest(line); request != nil {
+		//Well-formed, executable Request to a known route
+		return request, nil
+	}
+
+	//Valid request, but no route to handle it
+	return nil, line.NotImplemented()
 }
 
 func (router HttpRouter) routeRequest(requested *RequestLine) Request {

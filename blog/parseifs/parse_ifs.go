@@ -13,10 +13,10 @@ import (
 )
 
 func main() {
-	router := &RequestLineRouter{}
+	router := &HttpRouter{}
 	router.AddRoute(&getRoute{})
 
-	request, err := router.parseRequestLine(bufio.NewReader(bytes.NewBufferString("GET / HTTP/1.1\r\n\r\n")))
+	request, err := router.parse(bufio.NewReader(bytes.NewBufferString("GET / HTTP/1.1\r\n\r\n")))
 	if err != nil {
 		fmt.Printf("parse_ifs: %s", err)
 		os.Exit(1)
@@ -25,34 +25,34 @@ func main() {
 	request.Handle(os.Stdout)
 }
 
-type RequestLineRouter struct {
+type HttpRouter struct {
 	routes []Route
 }
 
-func (router *RequestLineRouter) AddRoute(route Route) {
+func (router *HttpRouter) AddRoute(route Route) {
 	router.routes = append(router.routes, route)
 }
 
-func (router RequestLineRouter) parseRequestLine(reader *bufio.Reader) (Request, Response) {
-	requestLineText, err := readCRLFLine(reader) //(line string, err Response)
+func (router HttpRouter) parse(reader *bufio.Reader) (Request, Response) {
+	requestText, err := readCRLFLine(reader) //string, err Response
 	if err != nil {
 		//No input, or it doesn't end in CRLF
 		return nil, err
 	}
 
-	requested, err := parseRequestLine(requestLineText) //(RequestLine, err Response)
+	requestLine, err := parseRequestLine(requestText) //RequestLine, err Response
 	if err != nil {
 		//Not a well-formed HTTP request line with {method, target, version}
 		return nil, err
 	}
 
-	if request := router.routeRequest(requested); request != nil {
+	if request := router.routeRequest(requestLine); request != nil {
 		//Well-formed, executable Request to a known route
 		return request, nil
 	}
 
 	//Valid request, but no route to handle it
-	return nil, requested.NotImplemented()
+	return nil, requestLine.NotImplemented()
 }
 
 func readCRLFLine(reader *bufio.Reader) (string, Response) {
@@ -84,7 +84,7 @@ func parseRequestLine(text string) (*RequestLine, Response) {
 	}, nil
 }
 
-func (router RequestLineRouter) routeRequest(requested *RequestLine) Request {
+func (router HttpRouter) routeRequest(requested *RequestLine) Request {
 	for _, route := range router.routes {
 		request := route.Route(requested)
 		if request != nil {

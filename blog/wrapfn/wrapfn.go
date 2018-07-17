@@ -33,19 +33,9 @@ func (router *HttpRouter) AddRoute(route Route) {
 	router.routes = append(router.routes, route)
 }
 
+//Updated
 func (router HttpRouter) parse(reader *bufio.Reader) (Request, Response) {
-	request, response := newStringOrResponse(readCRLFLine(reader)).
-		Map(parseRequestLine).
-		Map(router.routeRequest)
-
-	if response != nil {
-		return nil, response
-	} else if request == nil {
-		//Technically, this doesn't work because we now lack the intermediate value
-		return nil, requested.NotImplemented()
-	} else {
-		return request, nil
-	}
+	return router.route(parseRequestLine(readCRLFLine(reader)))
 }
 
 func readCRLFLine(reader *bufio.Reader) (string, Response) {
@@ -65,47 +55,17 @@ func readCRLFLine(reader *bufio.Reader) (string, Response) {
 	return trimmed, nil
 }
 
-func newStringOrResponse(data string, err Response) *StringOrResponse {
-	return &StringOrResponse{data: data, err: err}
-}
-
-type StringOrResponse struct {
-	data string
-	err Response
-}
-
-type ParseRequestLine func(text string) (*RequestLine, Response)
-func (either *StringOrResponse) Map(parse ParseRequestLine) *RequestLineOrResponse {
-	if either.err != nil {
-		return &RequestLineOrResponse{data: nil, err: either.err}
+func parseRequestLine(text string, prevErr Response) (*RequestLine, Response) {
+	if prevErr != nil {
+		//New
+		return nil, prevErr
 	}
 
-	requestLine, err := parse(either.data)
-	if err != nil {
-		return &RequestLineOrResponse{data: nil, err: either.err}
-	}
-
-	return &RequestLineOrResponse{data: requestLine, err: nil}
-}
-
-type RequestLineOrResponse struct {
-	data *RequestLine
-	err Response
-}
-
-type RouteRequest func(requested *RequestLine) Request
-func (either *RequestLineOrResponse) Map(route RouteRequest) (Request, Response) {
-	if either.err != nil {
-		return nil, either.err
-	}
-
-	return route(either.data), nil
-}
-
-func parseRequestLine(text string) (*RequestLine, Response) {
 	fields := strings.Split(text, " ")
 	if len(fields) != 3 {
-		return nil, &clienterror.BadRequest{DisplayText: "incorrectly formatted or missing request-line"}
+		return nil, &clienterror.BadRequest{
+			DisplayText: "incorrectly formatted or missing request-line",
+		}
 	}
 
 	return &RequestLine{
@@ -114,15 +74,22 @@ func parseRequestLine(text string) (*RequestLine, Response) {
 	}, nil
 }
 
-func (router HttpRouter) routeRequest(requested *RequestLine) Request {
+func (router HttpRouter) route(line *RequestLine, prevErr Response) (Request, Response) {
+	if prevErr != nil {
+		//New
+		return nil, prevErr
+	}
+
 	for _, route := range router.routes {
-		request := route.Route(requested)
+		request := route.Route(line)
 		if request != nil {
-			return request
+			//Valid request to a known route
+			return request, nil
 		}
 	}
 
-	return nil
+	//Valid request, but unknown route
+	return nil, &servererror.NotImplemented{Method: line.Method}
 }
 
 type getRoute struct{}
@@ -159,3 +126,4 @@ type Response interface {
 	WriteTo(client io.Writer) error
 	WriteHeader(client io.Writer) error
 }
+
