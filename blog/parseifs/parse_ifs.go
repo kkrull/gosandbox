@@ -34,20 +34,24 @@ func (router *RequestLineRouter) AddRoute(route Route) {
 }
 
 func (router RequestLineRouter) parseRequestLine(reader *bufio.Reader) (Request, Response) {
-	requestLineText, err := readCRLFLine(reader)
+	requestLineText, err := readCRLFLine(reader) //(line string, err Response)
 	if err != nil {
+		//No input, or it doesn't end in CRLF
 		return nil, err
 	}
 
-	requested, err := parseRequestLine(requestLineText)
+	requested, err := parseRequestLine(requestLineText) //(RequestLine, err Response)
 	if err != nil {
+		//Not a well-formed HTTP request line with {method, target, version}
 		return nil, err
 	}
 
 	if request := router.routeRequest(requested); request != nil {
+		//Well-formed, executable Request to a known route
 		return request, nil
 	}
 
+	//Valid request, but no route to handle it
 	return nil, requested.NotImplemented()
 }
 

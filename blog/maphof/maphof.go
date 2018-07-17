@@ -76,6 +76,7 @@ func (router RequestLineRouter) parseRequestLine(reader *bufio.Reader) (Request,
 	if response != nil {
 		return nil, response
 	} else if request == nil {
+		//Technically, this doesn't work because we now lack the intermediate value
 		return nil, requested.NotImplemented()
 	} else {
 		return request, nil
