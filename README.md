@@ -2,6 +2,25 @@
 
 A place to try out ideas in Go.
 
+## Future Work
+
+### GitHub Actions
+
+- <https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go>
+- <https://github.com/actions/setup-go>
+
+### `godog`
+
+<https://github.com/cucumber/godog>
+
+### Cobra
+
+<https://github.com/spf13/cobra>
+
+### Bubbletea
+
+<https://github.com/charmbracelet/bubbletea/blob/master/examples/simple/main.go>
+
 ## Task automation
 
 Sub-projects each have their own `Makefile`, and there is a top-level `Makefile` that ties them all
