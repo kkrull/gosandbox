@@ -2,6 +2,11 @@
 
 A place to try out ideas in Go.
 
+## Continuous Integration
+
+This repository includes an example of how to do some basic Continuous Integration with GitHub
+Actions.  See `.github/workflows/` for details.
+
 ## Future Work
 
 ### GitHub Actions
