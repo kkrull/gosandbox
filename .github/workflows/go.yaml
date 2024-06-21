@@ -8,6 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
+  #TODO KDK: Build one module and test another
   build:
     runs-on: ubuntu-latest
     strategy:
