@@ -1,4 +1,4 @@
-package minimax_test
+package minimax
 
 import (
 	"testing"

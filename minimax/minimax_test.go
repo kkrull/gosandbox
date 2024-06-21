@@ -1,7 +1,6 @@
-package minimax_test
+package minimax
 
 import (
-	"github.com/kkrull/gosandbox/minimax"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -9,8 +8,8 @@ import (
 var _ = Describe("Scorer", func() {
 	var (
 		game   *GameWithKnownStates
-		max    = minimax.Player("Max")
-		scorer = &minimax.Scorer{}
+		max    = Player("Max")
+		scorer = &Scorer{}
 	)
 
 	Describe("#Score", func() {
