@@ -1,4 +1,4 @@
-module example/hello
+module github.com/kkrull/greet
 
 go 1.22.4
 

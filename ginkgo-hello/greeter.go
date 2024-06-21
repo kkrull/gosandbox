@@ -1,4 +1,4 @@
-package ginkgo_v2
+package ginkgohello
 
 import "fmt"
 

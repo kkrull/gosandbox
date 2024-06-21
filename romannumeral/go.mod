@@ -1,4 +1,4 @@
-module kkrull.github.com/gosandbox/ginkgov2
+module github.com/kkrull/romannumeral
 
 go 1.22.4
 

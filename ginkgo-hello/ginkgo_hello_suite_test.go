@@ -1,4 +1,4 @@
-package ginkgo_v2_test
+package ginkgohello_test
 
 import (
 	"testing"

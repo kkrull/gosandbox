@@ -42,7 +42,7 @@ func (router HttpRouter) parse(reader *bufio.Reader) (Request, Response) {
 		return nil, response
 	} else if request == nil {
 		//Technically, this doesn't work because we now lack the intermediate value
-		return nil, requested.NotImplemented()
+		return nil, &servererror.NotImplemented{}
 	} else {
 		return request, nil
 	}

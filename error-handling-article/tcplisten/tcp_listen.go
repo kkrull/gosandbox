@@ -1,4 +1,4 @@
-package tcplisten
+package main
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	listener, err := Listen("localhost", 1)
+	listener, err := Listen("localhost", 54321)
 	if err != nil {
 		fmt.Printf("%s", err)
 		os.Exit(1)
