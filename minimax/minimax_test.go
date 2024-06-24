@@ -21,5 +21,4 @@ var _ = Describe("Scorer", func() {
 	})
 })
 
-type GameWithKnownStates struct {
-}
+type GameWithKnownStates struct{}

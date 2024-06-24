@@ -1,0 +1,28 @@
+# https://pre-commit.com/index.html#adding-pre-commit-plugins-to-your-project
+repos:
+  # https://github.com/editorconfig-checker/editorconfig-checker.python?tab=readme-ov-file#usage-with-the-pre-commit-git-hooks-framework
+  - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
+    rev: "2.7.3"
+    hooks:
+      - id: editorconfig-checker
+        alias: ec
+
+  # https://github.com/DavidAnson/markdownlint-cli2#pre-commit
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.13.0
+    hooks:
+      - id: markdownlint-cli2
+
+  # https://github.com/mrtazz/checkmake#pre-commit-usage
+  - repo: https://github.com/mrtazz/checkmake.git
+    rev: 0.2.2
+    hooks:
+      - id: checkmake
+
+  # https://pre-commit.com/hooks.html
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-json
+      - id: check-yaml
+      - id: trailing-whitespace

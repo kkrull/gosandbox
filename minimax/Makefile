@@ -1,4 +1,14 @@
+.PHONY: default
 default: test
+	@:
+
+.PHONY: all
+all:
+	@:
+
+.PHONY: clean
+clean:
+	@:
 
 .PHONY: test
 test:

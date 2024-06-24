@@ -11,6 +11,7 @@ func main() {
 }
 
 type any interface{}
+
 func mapFn(value any, mapper func(any) any) any {
 	return mapper(value)
 }

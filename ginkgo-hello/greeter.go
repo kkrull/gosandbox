@@ -8,7 +8,7 @@ type Greeter struct {
 
 func (greeter Greeter) Greet() string {
 	var name string
-	if (greeter.Name != "") {
+	if greeter.Name != "" {
 		name = greeter.Name
 	} else {
 		name = "World"

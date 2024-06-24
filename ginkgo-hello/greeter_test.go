@@ -16,7 +16,7 @@ var _ = Describe("Greeter", func() {
 		})
 
 		It("greets a person by name", func() {
-			subject = &ginkgohello.Greeter{ "George" }
+			subject = &ginkgohello.Greeter{"George"}
 			Expect(subject.Greet()).To(Equal("Hello George!"))
 		})
 	})

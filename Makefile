@@ -1,27 +1,42 @@
+.PHONY: default
 default: all
+	@:
+
+## Configuration
+
+sub_projects := \
+	channel \
+	cli \
+	error-handling-article \
+	ginkgo-hello \
+	greet \
+	minimax \
+	romannumeral \
+	signal \
+	stringcalc \
+	time \
+
+.PHONY: debug
+debug:
+	$(info sub_projects: $(sub_projects))
+	@:
+
+## Standard targets
 
 .PHONY: all
 all:
-	make -C channel
-	make -C cli
-	make -C error-handling-article
-	make -C ginkgo-hello
-	make -C greet
-	make -C minimax
-	make -C romannumeral
-	make -C signal
-	make -C stringcalc
-	make -C time
+	$(foreach sub_project,$(sub_projects),make -C $(sub_project) all;)
+
+.PHONY: clean
+clean:
+	$(foreach sub_project,$(sub_projects),make -C $(sub_project) clean;)
+
+.PHONY: test
+test:
+	$(foreach sub_project,$(sub_projects),make -C $(sub_project) test;)
+
+## Top-level targets
 
 .PHONY: tidy
 tidy:
-	make -C channel tidy
-	make -C cli tidy
-	make -C error-handling-article tidy
-	make -C ginkgo-hello tidy
-	make -C greet tidy
-	make -C minimax tidy
-	make -C romannumeral tidy
-	make -C signal tidy
-	make -C stringcalc tidy
-	make -C time tidy
+	$(foreach sub_project,$(sub_projects),make -C $(sub_project) tidy;)

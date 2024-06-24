@@ -1,9 +1,9 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
-	"flag"
 )
 
 func main() {
@@ -13,7 +13,7 @@ func main() {
 	}
 
 	flagSet := flag.NewFlagSet("custom program", flag.ContinueOnError)
-	var port = flagSet.Uint("p", 0, "TCP port number")
+	port := flagSet.Uint("p", 0, "TCP port number")
 	parseError := flagSet.Parse(os.Args[1:])
 	if parseError == flag.ErrHelp {
 		fmt.Printf("Asked for help")
