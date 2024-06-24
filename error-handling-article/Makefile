@@ -1,4 +1,14 @@
+.PHONY: default
 default: run
+	@:
+
+.PHONY: all
+all:
+	@:
+
+.PHONY: clean
+clean:
+	@:
 
 .PHONY: run
 run:
@@ -8,6 +18,10 @@ run:
 	go run parseifs/parse_ifs.go
 	go run tcplisten/tcp_listen.go
 	go run wrapfn/wrapfn.go
+
+.PHONY: test
+test:
+	@:
 
 .PHONY: tidy
 tidy:

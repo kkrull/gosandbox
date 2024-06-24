@@ -1,4 +1,6 @@
-default: build
+.PHONY: default
+default: all
+	@:
 
 ## Environment
 
@@ -21,18 +23,19 @@ sources := $(wildcard *.go)
 
 ## Standard targets
 
+.PHONY: all
+all: $(executable)
+	@:
+
 .PHONY: clean
 clean:
 	$(RM) $(executable)
 
-## Greeter
-
-.PHONY: build
-build: $(executable)
+.PHONY: test
+test:
 	@:
 
-$(executable): $(sources)
-	go build $?
+## Greeter
 
 .PHONY: run
 run:
@@ -41,3 +44,6 @@ run:
 .PHONY: tidy
 tidy:
 	go mod tidy
+
+$(executable): $(sources)
+	go build $?
