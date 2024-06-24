@@ -13,8 +13,6 @@ all:
 	make -C stringcalc
 	make -C time
 
-#TODO KDK: Add test and make them all pass
-
 .PHONY: tidy
 tidy:
 	make -C channel tidy
