@@ -8,18 +8,21 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  greet:
+    defaults:
+      run:
+        working-directory: ./greet
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        go-version: [ '1.22.x' ]
 
     steps:
       - uses: actions/checkout@v4
       - name: Setup Go ${{ matrix.go-version }}
         uses: actions/setup-go@v5
         with:
-          go-version: ${{ matrix.go-version }}
+          cache-dependency-path: greet/go.sum
+          go-version-file: greet/go.mod
 
-      - name: Display Go version
-        run: go version
+      - run: go version
+      - run: go get -v .
+      - run: go build -v ./...
+
