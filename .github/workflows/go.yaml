@@ -22,6 +22,7 @@ jobs:
       - name: Setup Go ${{ matrix.go-version }}
         uses: actions/setup-go@v5
         with:
+          cache-dependency-path: greet/go.sum
           go-version: ${{ matrix.go-version }}
 
       - run: go version
