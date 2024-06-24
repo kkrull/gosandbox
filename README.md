@@ -9,11 +9,6 @@ Actions.  See `.github/workflows/` for details.
 
 ## Future Work
 
-### GitHub Actions
-
-- <https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go>
-- <https://github.com/actions/setup-go>
-
 ### `godog`
 
 <https://github.com/cucumber/godog>

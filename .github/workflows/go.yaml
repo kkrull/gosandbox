@@ -8,8 +8,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  #TODO KDK: Build one module and test another
-  build:
+  greet:
+    defaults:
+      run:
+        working-directory: ./greet
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -22,5 +24,7 @@ jobs:
         with:
           go-version: ${{ matrix.go-version }}
 
-      - name: Display Go version
-        run: go version
+      - run: go version
+      - run: go get -v .
+      - run: go build -v ./...
+
