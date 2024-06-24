@@ -1,14 +1,14 @@
 package minimax
 
-type Scorer struct {
-}
+type Scorer struct{}
 
 func (scorer *Scorer) Score(game GameState, player Player) int {
 	panic("Not implemented")
 }
 
-type GameState interface {
-}
+type GameState interface{}
 
-type Move string
-type Player string
+type (
+	Move   string
+	Player string
+)

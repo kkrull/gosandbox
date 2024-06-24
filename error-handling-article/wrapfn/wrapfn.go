@@ -33,7 +33,7 @@ func (router *HttpRouter) AddRoute(route Route) {
 	router.routes = append(router.routes, route)
 }
 
-//Updated
+// Updated
 func (router HttpRouter) parse(reader *bufio.Reader) (Request, Response) {
 	return router.route(parseRequestLine(readCRLFLine(reader)))
 }
@@ -57,7 +57,7 @@ func readCRLFLine(reader *bufio.Reader) (string, Response) {
 
 func parseRequestLine(text string, prevErr Response) (*RequestLine, Response) {
 	if prevErr != nil {
-		//New
+		// New
 		return nil, prevErr
 	}
 
@@ -76,19 +76,19 @@ func parseRequestLine(text string, prevErr Response) (*RequestLine, Response) {
 
 func (router HttpRouter) route(line *RequestLine, prevErr Response) (Request, Response) {
 	if prevErr != nil {
-		//New
+		// New
 		return nil, prevErr
 	}
 
 	for _, route := range router.routes {
 		request := route.Route(line)
 		if request != nil {
-			//Valid request to a known route
+			// Valid request to a known route
 			return request, nil
 		}
 	}
 
-	//Valid request, but unknown route
+	// Valid request, but unknown route
 	return nil, &servererror.NotImplemented{Method: line.Method}
 }
 
@@ -126,4 +126,3 @@ type Response interface {
 	WriteTo(client io.Writer) error
 	WriteHeader(client io.Writer) error
 }
-

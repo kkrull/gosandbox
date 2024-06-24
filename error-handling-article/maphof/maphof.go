@@ -41,7 +41,7 @@ func (router HttpRouter) parse(reader *bufio.Reader) (Request, Response) {
 	if response != nil {
 		return nil, response
 	} else if request == nil {
-		//Technically, this doesn't work because we now lack the intermediate value
+		// Technically, this doesn't work because we now lack the intermediate value
 		return nil, &servererror.NotImplemented{}
 	} else {
 		return request, nil
@@ -71,10 +71,11 @@ func newStringOrResponse(data string, err Response) *StringOrResponse {
 
 type StringOrResponse struct {
 	data string
-	err Response
+	err  Response
 }
 
 type ParseRequestLine func(text string) (*RequestLine, Response)
+
 func (either *StringOrResponse) Map(parse ParseRequestLine) *RequestLineOrResponse {
 	if either.err != nil {
 		return &RequestLineOrResponse{data: nil, err: either.err}
@@ -90,10 +91,11 @@ func (either *StringOrResponse) Map(parse ParseRequestLine) *RequestLineOrRespon
 
 type RequestLineOrResponse struct {
 	data *RequestLine
-	err Response
+	err  Response
 }
 
 type RouteRequest func(requested *RequestLine) Request
+
 func (either *RequestLineOrResponse) Map(route RouteRequest) (Request, Response) {
 	if either.err != nil {
 		return nil, either.err
