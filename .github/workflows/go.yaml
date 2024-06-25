@@ -1,14 +1,32 @@
-name: Go
+name: Go Sandbox CI
 
 on:
   pull_request:
-    branches: ['main']
+    branches: ["main"]
   push:
-    branches: ['main']
+    branches: ["main"]
   workflow_dispatch:
 
 jobs:
-  greet:
+  ginkgo-hello-test:
+    defaults:
+      run:
+        working-directory: ./ginkgo-hello
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v5
+        with:
+          cache-dependency-path: ginkgo-hello/go.sum
+          go-version-file: ginkgo-hello/go.mod
+
+      - run: go version
+      - run: go get -t -v .
+      - run: go test -v ./...
+
+  greet-build:
     defaults:
       run:
         working-directory: ./greet
@@ -25,4 +43,3 @@ jobs:
       - run: go version
       - run: go get -v .
       - run: go build -v ./...
-

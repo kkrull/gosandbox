@@ -11,9 +11,7 @@ sub_projects := \
 	ginkgo-hello \
 	greet \
 	minimax \
-	romannumeral \
 	signal \
-	stringcalc \
 	time \
 
 .PHONY: debug
