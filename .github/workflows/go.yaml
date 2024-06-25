@@ -2,9 +2,9 @@ name: Go
 
 on:
   pull_request:
-    branches: ['main']
+    branches: ["main"]
   push:
-    branches: ['main']
+    branches: ["main"]
   workflow_dispatch:
 
 jobs:
@@ -25,4 +25,3 @@ jobs:
       - run: go version
       - run: go get -v .
       - run: go build -v ./...
-
