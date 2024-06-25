@@ -7,6 +7,7 @@ default: all
 sub_projects := \
 	channel \
 	cli \
+	cobra-hello \
 	error-handling-article \
 	ginkgo-hello \
 	greet \

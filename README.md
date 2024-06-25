@@ -13,10 +13,6 @@ Actions.  See `.github/workflows/` for details.
 
 <https://github.com/cucumber/godog>
 
-### Cobra
-
-<https://github.com/spf13/cobra>
-
 ### Bubbletea
 
 <https://github.com/charmbracelet/bubbletea/blob/master/examples/simple/main.go>
