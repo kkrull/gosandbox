@@ -23,7 +23,7 @@ jobs:
           go-version-file: ginkgo-hello/go.mod
 
       - run: go version
-      - run: go get . -t -v
+      - run: go get -t -v .
       - run: go test -v ./...
 
   greet-build:
@@ -41,5 +41,5 @@ jobs:
           go-version-file: greet/go.mod
 
       - run: go version
-      - run: go get . -v
+      - run: go get -v .
       - run: go build -v ./...
