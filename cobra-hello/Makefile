@@ -2,26 +2,14 @@
 default: all
 	@:
 
-## Environment
+## Artifact
 
 ifeq ($(OS),Windows_NT)
 	executable ?= cobrahello.exe
 endif
 
 executable ?= cobrahello
-
-.PHONY: debug
-debug:
-	$(info OS: $(OS))
-	$(info - executable: $(executable))
-	$(info - sources: $(sources))
-	@:
-
-## Sources
-
 sources := $(wildcard *.go)
-
-## Standard targets
 
 .PHONY: all
 all: $(executable)
@@ -31,11 +19,19 @@ all: $(executable)
 clean:
 	$(RM) $(executable)
 
-.PHONY: test
-test:
-	ginkgo
+$(executable): $(sources)
+	go build -o $(executable) $?
 
-## Module targets
+## Configuration
+
+.PHONY: print-config
+print-config:
+	$(info OS: $(OS))
+	$(info - executable: $(executable))
+	$(info - sources: $(sources))
+	@:
+
+## Development
 
 .PHONY: install-tools
 install-tools:
@@ -45,6 +41,10 @@ install-tools:
 run:
 	go run .
 
+.PHONY: test
+test:
+	ginkgo
+
 .PHONY: tidy
 tidy:
 	go mod tidy
@@ -52,6 +52,3 @@ tidy:
 .PHONY: update
 update:
 	go get -t -u -v
-
-$(executable): $(sources)
-	go build $?
