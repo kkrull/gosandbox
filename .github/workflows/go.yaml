@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  ginkgo-hello:
+  ginkgo-hello-test:
     defaults:
       run:
         working-directory: ./ginkgo-hello
@@ -23,10 +23,10 @@ jobs:
           go-version-file: ginkgo-hello/go.mod
 
       - run: go version
-      - run: go get .
+      - run: go get . -t -v
       - run: go test -v ./...
 
-  greet:
+  greet-build:
     defaults:
       run:
         working-directory: ./greet
@@ -41,5 +41,5 @@ jobs:
           go-version-file: greet/go.mod
 
       - run: go version
-      - run: go get .
+      - run: go get . -v
       - run: go build -v ./...
