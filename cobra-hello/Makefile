@@ -37,6 +37,10 @@ test:
 
 ## Module targets
 
+.PHONY: install-tools
+install-tools:
+	go install github.com/spf13/cobra-cli@latest
+
 .PHONY: run
 run:
 	go run .
@@ -44,6 +48,10 @@ run:
 .PHONY: tidy
 tidy:
 	go mod tidy
+
+.PHONY: update
+update:
+	go get -t -u -v
 
 $(executable): $(sources)
 	go build $?
