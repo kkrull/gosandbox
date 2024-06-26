@@ -1,6 +1,7 @@
 package rootCmd
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -11,8 +12,12 @@ var rootCmd = &cobra.Command{
 	Short: "Demonstrates how to use Cobra",
 	Long: `Demonstrates how to use Cobra to parse Command Line Arguments:
 Usage: cobrahello -t`,
-	// Uncomment the following line if your bare application has an action associated with it:
-	// Run: func(cmd *cobra.Command, args []string) { },
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("rootCmd args:")
+		for i, v := range args {
+			fmt.Printf("- %d: %s\n", i, v)
+		}
+	 },
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
