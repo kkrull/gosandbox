@@ -1,7 +1,7 @@
 package main
 
-import "github.com/kkrull/cobra-hello/cmd"
+import "github.com/kkrull/cobra-hello/rootCmd"
 
 func main() {
-	cmd.Execute()
+	rootCmd.Execute()
 }
