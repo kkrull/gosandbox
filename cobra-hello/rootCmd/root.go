@@ -7,6 +7,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// TODO KDK: Add a local flag and see that it gets parsed
+// https://github.com/spf13/cobra/blob/main/site/content/user_guide.md#local-flags
 var rootCmd = &cobra.Command{
 	Use:   "cobra-hello",
 	Short: "Demonstrates how to use Cobra",
