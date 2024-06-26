@@ -11,11 +11,11 @@ var rootCmd = &cobra.Command{
 	Use:   "cobra-hello",
 	Short: "Demonstrates how to use Cobra",
 	Long: `Demonstrates how to use Cobra to parse Command Line Arguments:
-Usage: cobrahello -t`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("rootCmd args:")
-		for i, v := range args {
-			fmt.Printf("- %d: %s\n", i, v)
+Usage: cobrahello [-h|--help] [-t|--toggle]`,
+	Run: func(cmd *cobra.Command, positionalArgs []string) {
+		fmt.Println("rootCmd positional args:")
+		for i, arg := range positionalArgs {
+			fmt.Printf("- %d: %s\n", i, arg)
 		}
 	 },
 }

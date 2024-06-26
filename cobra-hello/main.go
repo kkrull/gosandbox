@@ -9,8 +9,8 @@ import (
 
 func main() {
 	fmt.Println("Raw args:")
-	for i, v := range os.Args {
-		fmt.Printf("- %d: %s\n", i, v)
+	for i, rawArg := range os.Args {
+		fmt.Printf("- %d: %s\n", i, rawArg)
 	}
 
 	rootCmd.Execute()
