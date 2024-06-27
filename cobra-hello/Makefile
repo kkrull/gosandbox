@@ -33,8 +33,13 @@ print-config:
 
 ## Development
 
+.PHONY: format
+format:
+	gofumpt -l -w .
+
 .PHONY: install-tools
 install-tools:
+	go install mvdan.cc/gofumpt@latest
 	go install github.com/spf13/cobra-cli@latest
 
 .PHONY: run

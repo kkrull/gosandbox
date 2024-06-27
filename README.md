@@ -29,3 +29,15 @@ Runs a main program or tests, whichever is used in that sub-project.
 ### `make tidy`
 
 Runs `go mod tidy` in a sub-project.
+
+## Tools
+
+### `gofumpt`
+
+<https://github.com/mvdan/gofumpt>
+
+#### Installation
+
+```sh
+go install mvdan.cc/gofumpt@latest
+```
