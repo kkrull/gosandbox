@@ -19,7 +19,7 @@ Usage: cobrahello [-h|--help] [-t|--toggle]`,
 		for i, arg := range positionalArgs {
 			fmt.Printf("- %d: %s\n", i, arg)
 		}
-	 },
+	},
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
