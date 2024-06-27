@@ -9,7 +9,8 @@ ifeq ($(OS),Windows_NT)
 endif
 
 executable ?= cobrahello
-sources := $(wildcard *.go)
+sources := $(wildcard *.go **/*.go)
+source_main := main.go
 
 .PHONY: all
 all: $(executable)
@@ -20,7 +21,7 @@ clean:
 	$(RM) $(executable)
 
 $(executable): $(sources)
-	go build -o $(executable) $?
+	go build -o $(executable) $(source_main)
 
 ## Configuration
 
