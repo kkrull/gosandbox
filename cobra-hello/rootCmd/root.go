@@ -7,32 +7,29 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// TODO KDK: Add a local flag and see that it gets parsed
-// https://github.com/spf13/cobra/blob/main/site/content/user_guide.md#local-flags
 var rootCmd = &cobra.Command{
-	Use:   "cobra-hello",
-	Short: "Demonstrates how to use Cobra",
 	Long: `Demonstrates how to use Cobra to parse Command Line Arguments:
-Usage: cobrahello [-h|--help] [-t|--toggle]`,
+Usage: cobrahello [-h|--help]`,
 	Run: func(cmd *cobra.Command, positionalArgs []string) {
 		fmt.Println("rootCmd positional args:")
 		for i, arg := range positionalArgs {
 			fmt.Printf("- %d: %s\n", i, arg)
 		}
 	},
+	Short: "Demonstrates how to use Cobra",
+	Use:   "cobra-hello",
+	Version: "0.0.1",
 }
 
-// Execute adds all child commands to the root command and sets flags appropriately.
-// This is called by main.main(). It only needs to happen once to the rootCmd.
+func init() {
+	// TODO KDK: Add a local flag and see that it gets parsed
+	// https://github.com/spf13/cobra/blob/main/site/content/user_guide.md#local-flags
+	rootCmd.Flags().String("home-dir", "<default-value>", "some description of what this means")
+}
+
 func Execute() {
 	err := rootCmd.Execute()
 	if err != nil {
 		os.Exit(1)
 	}
-}
-
-// Define global (persistent) and local flags and configuration settings.
-func init() {
-	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.cobra-hello.yaml)")
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
