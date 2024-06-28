@@ -26,7 +26,11 @@ var (
 )
 
 func init() {
-	homeDirFlag = rootCmd.Flags().String("home-dir", "<default-value>", "some description of what this means")
+	homeDirFlag = rootCmd.Flags().String(
+		"home-dir",
+		"<default-value>",
+		"some description of what this means",
+	)
 }
 
 func Execute() {

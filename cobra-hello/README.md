@@ -16,11 +16,9 @@ Then initialize the project.
 cobra-cli init
 ```
 
-TODO KDK: Go through the User Guide
-<https://github.com/spf13/cobra/blob/main/site/content/user_guide.md>
-
 ## Getting Started
 
 <https://cobra.dev/#getting-started>
+<https://github.com/spf13/cobra/blob/main/site/content/user_guide.md>
 <https://pkg.go.dev/flag>
 <https://pkg.go.dev/github.com/spf13/pflag#pkg-index>
