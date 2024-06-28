@@ -13,10 +13,6 @@ Actions.  See `.github/workflows/` for details.
 
 <https://github.com/cucumber/godog>
 
-### Cobra
-
-<https://github.com/spf13/cobra>
-
 ### Bubbletea
 
 <https://github.com/charmbracelet/bubbletea/blob/master/examples/simple/main.go>
@@ -33,3 +29,15 @@ Runs a main program or tests, whichever is used in that sub-project.
 ### `make tidy`
 
 Runs `go mod tidy` in a sub-project.
+
+## Tools
+
+### `gofumpt`
+
+<https://github.com/mvdan/gofumpt>
+
+#### Installation
+
+```sh
+go install mvdan.cc/gofumpt@latest
+```
