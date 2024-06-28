@@ -8,19 +8,21 @@ import (
 	. "github.com/onsi/gomega"
 )
 
+var (
+	errBuffer = new(bytes.Buffer)
+	outBuffer = new(bytes.Buffer)
+)
+
 var _ = Describe("rootCmd", func() {
 	Describe("Execute", func() {
 		It("returns no error, given valid args", func() {
-			buf := new(bytes.Buffer)
-			err := rootCmd.Execute([]string{}, buf, buf)
+			err := rootCmd.Execute([]string{}, errBuffer, outBuffer)
 			Expect(err).To(BeNil())
 		})
 
 		It("does not write to stderr, given valid args", func() {
-			errBuf := new(bytes.Buffer)
-			outBuf := new(bytes.Buffer)
-			rootCmd.Execute([]string{}, errBuf, outBuf)
-			Expect(errBuf.String()).To(BeEmpty())
+			rootCmd.Execute([]string{}, errBuffer, outBuffer)
+			Expect(errBuffer.String()).To(BeEmpty())
 		})
 	})
 })
