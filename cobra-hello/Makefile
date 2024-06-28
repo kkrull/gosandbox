@@ -49,7 +49,11 @@ run:
 
 .PHONY: test
 test:
-	ginkgo
+	ginkgo run -r
+
+.PHONY: test-watch
+test-watch:
+	ginkgo watch -r
 
 .PHONY: tidy
 tidy:
