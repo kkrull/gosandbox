@@ -2,20 +2,23 @@ package rootCmd
 
 import (
 	"fmt"
+	"io"
 
 	"github.com/spf13/cobra"
 )
 
 var (
-	homeDirFlag *string
-	rootCmd     = &cobra.Command{
+	cmdErrWriter io.Writer
+	cmdOutWriter io.Writer
+	homeDirFlag  *string
+	rootCmd      = &cobra.Command{
 		Long: `cobrahello demonstrates how to use Cobra to parse command line arguments`,
 		Run: func(cmd *cobra.Command, positionalArgs []string) {
-			fmt.Printf("homeDir: %s\n", *homeDirFlag)
+			fmt.Fprintf(cmdOutWriter, "homeDir: %s\n", *homeDirFlag)
 
-			fmt.Println("rootCmd positional args:")
+			fmt.Fprintln(cmdOutWriter, "rootCmd positional args:")
 			for i, arg := range positionalArgs {
-				fmt.Printf("- %d: %s\n", i, arg)
+				fmt.Fprintf(cmdOutWriter, "- %d: %s\n", i, arg)
 			}
 		},
 		Short:   "Demonstrates how to use Cobra",
@@ -32,7 +35,12 @@ func init() {
 	)
 }
 
-func Execute(args []string) error {
+func Execute(args []string, errWriter io.Writer, outWriter io.Writer) error {
+	cmdErrWriter = errWriter
+	cmdOutWriter = outWriter
+
 	rootCmd.SetArgs(args)
+	rootCmd.SetErr(errWriter)
+	rootCmd.SetOut(outWriter)
 	return rootCmd.Execute()
 }
