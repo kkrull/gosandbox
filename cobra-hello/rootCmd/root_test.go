@@ -8,8 +8,9 @@ import (
 
 var _ = Describe("rootCmd", func() {
 	Describe("Execute", func() {
-		It("exists", func() {
-			Expect(rootCmd.Execute).To(Not(BeNil()))
+		It("returns no error, given valid args", func() {
+			err := rootCmd.Execute([]string{})
+			Expect(err).To(BeNil())
 		})
 	})
 })

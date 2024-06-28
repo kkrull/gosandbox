@@ -13,5 +13,8 @@ func main() {
 		fmt.Printf("- %d: %s\n", i, rawArg)
 	}
 
-	rootCmd.Execute()
+	err := rootCmd.Execute(os.Args[1:])
+	if err != nil {
+		os.Exit(1)
+	}
 }
