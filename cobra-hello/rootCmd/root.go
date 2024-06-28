@@ -8,7 +8,6 @@ import (
 )
 
 var (
-	cmdErrWriter io.Writer
 	cmdOutWriter io.Writer
 	homeDirFlag  *string
 	rootCmd      = &cobra.Command{
@@ -36,7 +35,6 @@ func init() {
 }
 
 func Execute(args []string, errWriter io.Writer, outWriter io.Writer) error {
-	cmdErrWriter = errWriter
 	cmdOutWriter = outWriter
 
 	rootCmd.SetArgs(args)
