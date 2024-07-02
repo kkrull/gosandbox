@@ -7,6 +7,7 @@ import (
 )
 
 func InitializeScenario(ctx *godog.ScenarioContext) {
+	//TODO KDK: Implement step definitions here with ctx.Given et al
 }
 
 func TestFeatures(t *testing.T) {
