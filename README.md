@@ -9,10 +9,6 @@ Actions.  See `.github/workflows/` for details.
 
 ## Future Work
 
-### `godog`
-
-<https://github.com/cucumber/godog>
-
 ### Bubbletea
 
 <https://github.com/charmbracelet/bubbletea/blob/master/examples/simple/main.go>
