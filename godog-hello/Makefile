@@ -47,9 +47,9 @@ install-tools:
 # run:
 # 	go run .
 
-# .PHONY: test
-# test:
-# 	ginkgo run -r
+.PHONY: test
+test:
+	go test -v greeter_test.go
 
 # .PHONY: test-watch
 # test-watch:
