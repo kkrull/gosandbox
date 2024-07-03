@@ -6,8 +6,8 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 )
 
-func NewModel() *greeterModel {
-	return &greeterModel{Message: "Hello World!"}
+func NewModel() greeterModel {
+	return greeterModel{Message: "Hello World!"}
 }
 
 /* bubbletea.Model */
