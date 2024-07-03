@@ -5,6 +5,7 @@ default: all
 ## Configuration
 
 sub_projects := \
+	bubbletea-hello \
 	channel \
 	cli \
 	cobra-hello \
