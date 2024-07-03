@@ -7,12 +7,6 @@ A place to try out ideas in Go.
 This repository includes an example of how to do some basic Continuous Integration with GitHub
 Actions.  See `.github/workflows/` for details.
 
-## Future Work
-
-### Bubbletea
-
-<https://github.com/charmbracelet/bubbletea/blob/master/examples/simple/main.go>
-
 ## Task automation
 
 Sub-projects each have their own `Makefile`, and there is a top-level `Makefile` that ties them all
