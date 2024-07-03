@@ -31,8 +31,7 @@ var _ = Describe("greet", func() {
 				model, command := subject.Update(message)
 
 				Expect(model).To(Equal(subject))
-				// Expect(command).To(Equal(tea.Quit))
-				Expect(command).NotTo(BeNil())
+				Expect(command()).To(Equal(tea.Quit()))
 			})
 
 			It("returns no change, given any other message", func() {
