@@ -1,6 +1,6 @@
-# .PHONY: default
-# default: all
-# 	@:
+.PHONY: default
+default: all
+	@:
 
 ## Artifact
 
@@ -12,16 +12,13 @@
 # sources := $(wildcard *.go **/*.go)
 # source_main := main.go
 
-# .PHONY: all
-# all: $(executable)
-# 	@:
+.PHONY: all
+all:
+	@:
 
-# .PHONY: clean
-# clean:
-# 	$(RM) $(executable)
-
-# $(executable): $(sources)
-# 	go build -o $(executable) $(source_main)
+.PHONY: clean
+clean:
+	@:
 
 ## Configuration
 
