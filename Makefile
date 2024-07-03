@@ -10,6 +10,7 @@ sub_projects := \
 	cli \
 	cobra-hello \
 	error-handling-article \
+	fs-hello \
 	ginkgo-hello \
 	godog-hello \
 	greet \
