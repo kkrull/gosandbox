@@ -34,7 +34,7 @@ func thatGreetingShouldAddressEverybody() error {
 }
 
 func InitializeScenario(ctx *godog.ScenarioContext) {
-	ctx.Step(`^I have a Greeter$`, iHaveAGreeter)
-	ctx.Step(`^that greeter gives a general greeting$`, thatGreeterGivesAGeneralGreeting)
-	ctx.Step(`^that greeting should address everybody$`, thatGreetingShouldAddressEverybody)
+	ctx.Given(`^I have a Greeter$`, iHaveAGreeter)
+	ctx.When(`^that greeter gives a general greeting$`, thatGreeterGivesAGeneralGreeting)
+	ctx.Then(`^that greeting should address everybody$`, thatGreetingShouldAddressEverybody)
 }
