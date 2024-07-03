@@ -2,8 +2,6 @@
 default: all
 	@:
 
-## Artifact
-
 .PHONY: all
 all:
 	@:
@@ -11,17 +9,6 @@ all:
 .PHONY: clean
 clean:
 	@:
-
-## Configuration
-
-# .PHONY: print-config
-# print-config:
-# 	$(info OS: $(OS))
-# 	$(info - executable: $(executable))
-# 	$(info - sources: $(sources))
-# 	@:
-
-## Development
 
 .PHONY: format
 format:
@@ -31,17 +18,9 @@ format:
 install-tools:
 	go install mvdan.cc/gofumpt@latest
 
-# .PHONY: run
-# run:
-# 	go run .
-
 .PHONY: test
 test:
 	go test -v greeter_test.go
-
-# .PHONY: test-watch
-# test-watch:
-# 	ginkgo watch -r
 
 .PHONY: tidy
 tidy:
