@@ -20,7 +20,7 @@ install-tools:
 
 .PHONY: test
 test:
-	go test -v greeter_test.go
+	go test -v greeter/greeter_test.go
 
 .PHONY: tidy
 tidy:
