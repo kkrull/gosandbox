@@ -41,5 +41,5 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m model) View() string {
-	return "Hello World!"
+	return m.Message
 }
