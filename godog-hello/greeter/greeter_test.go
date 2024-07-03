@@ -1,10 +1,10 @@
-package main_test
+package greeter_test
 
 import (
 	"testing"
 
 	"github.com/cucumber/godog"
-	. "github.com/kkrull/godog-hello"
+	. "github.com/kkrull/godog-hello/greeter"
 	. "github.com/onsi/gomega"
 )
 
@@ -17,7 +17,7 @@ func TestFeatures(t *testing.T) {
 	suite := godog.TestSuite{
 		Options: &godog.Options{
 			Format:   "pretty",
-			Paths:    []string{"features"},
+			Paths:    []string{"../features"},
 			TestingT: t,
 		},
 		ScenarioInitializer: InitializeScenario,
