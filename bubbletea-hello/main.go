@@ -8,27 +8,26 @@ import (
 )
 
 func main() {
-	p := tea.NewProgram(initialModel())
+	p := tea.NewProgram(newGreeterModel())
 	if _, err := p.Run(); err != nil {
 		fmt.Printf("Bubble Tea program failed: %v", err)
 		os.Exit(1)
 	}
-	fmt.Printf("Hello World!\n")
 }
 
-type model struct {
+type greeterModel struct {
 	Message string
 }
 
-func initialModel() *model {
-	return &model{Message: "Hello World!"}
+func newGreeterModel() *greeterModel {
+	return &greeterModel{Message: "Hello World!"}
 }
 
-func (m model) Init() tea.Cmd {
+func (m greeterModel) Init() tea.Cmd {
 	return nil
 }
 
-func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m greeterModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch msg.String() {
@@ -40,6 +39,6 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 
-func (m model) View() string {
-	return m.Message
+func (m greeterModel) View() string {
+	return fmt.Sprintf("%s\nPress q or Ctrl+C to quit.", m.Message)
 }
