@@ -4,6 +4,13 @@ import (
 	"testing"
 
 	"github.com/cucumber/godog"
+	. "github.com/kkrull/godog-hello"
+	. "github.com/onsi/gomega"
+)
+
+var (
+	thatGreeter  *Greeter
+	thatGreeting string
 )
 
 func TestFeatures(t *testing.T) {
@@ -15,22 +22,25 @@ func TestFeatures(t *testing.T) {
 		},
 		ScenarioInitializer: InitializeScenario,
 	}
+	RegisterTestingT(t)
 
 	if suite.Run() != 0 {
 		t.Fatal("non-zero status returned from feature tests")
 	}
 }
 
-func iHaveAGreeter() error {
-	return godog.ErrPending
+func iHaveAGreeter() {
+	thatGreeter = NewGreeter()
 }
 
 func thatGreeterGivesAGeneralGreeting() error {
-	return godog.ErrPending
+	var err error
+	thatGreeting, err = thatGreeter.Greet()
+	return err
 }
 
-func thatGreetingShouldAddressEverybody() error {
-	return godog.ErrPending
+func thatGreetingShouldAddressEverybody() {
+	Expect(thatGreeting).To(Equal("Hello World!"))
 }
 
 func InitializeScenario(ctx *godog.ScenarioContext) {

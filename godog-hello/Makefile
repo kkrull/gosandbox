@@ -4,14 +4,6 @@ default: all
 
 ## Artifact
 
-# ifeq ($(OS),Windows_NT)
-# 	executable ?= cobrahello.exe
-# endif
-
-# executable ?= cobrahello
-# sources := $(wildcard *.go **/*.go)
-# source_main := main.go
-
 .PHONY: all
 all:
 	@:
