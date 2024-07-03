@@ -40,6 +40,7 @@ format:
 
 .PHONY: install-tools
 install-tools:
+	go install github.com/onsi/ginkgo/v2
 	go install mvdan.cc/gofumpt@latest
 
 .PHONY: run
@@ -48,12 +49,11 @@ run:
 
 .PHONY: test
 test:
-	@:
-	# ginkgo run -r
+	ginkgo run -r
 
-# .PHONY: test-watch
-# test-watch:
-# 	ginkgo watch -r
+.PHONY: test-watch
+test-watch:
+	ginkgo watch -r
 
 .PHONY: tidy
 tidy:
