@@ -10,6 +10,7 @@ sub_projects := \
 	cobra-hello \
 	error-handling-article \
 	ginkgo-hello \
+	godog-hello \
 	greet \
 	minimax \
 	signal \
